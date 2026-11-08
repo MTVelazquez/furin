@@ -1,0 +1,43 @@
+.furin-blur-number {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  font-family: "Geist", "Inter", "SF Pro Display", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-size: calc(var(--furin-bn-size) * var(--furin-bn-fit, 1));
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--furin-bn-color);
+  white-space: nowrap;
+  cursor: default;
+  -webkit-font-smoothing: antialiased;
+}
+.furin-blur-number__defs { position: absolute; width: 0; height: 0; pointer-events: none; }
+.furin-blur-number__visible { display: inline-flex; align-items: baseline; }
+.furin-blur-number__fijo { color: color-mix(in srgb, var(--furin-bn-color) 42%, transparent); font-weight: 500; }
+.furin-blur-number__fijo--pre { margin-right: 0.06em; font-size: 0.62em; align-self: flex-start; margin-top: 0.14em; }
+.furin-blur-number__fijo--suf { margin-left: 0.06em; font-size: 0.62em; }
+.furin-blur-number__sep { display: inline-block; margin-inline: 0.02em; color: color-mix(in srgb, var(--furin-bn-color) 55%, transparent); }
+/* Cada cifra es una ventana de una línea: el dígito fantasma fija su ancho y las celdas ruedan dentro. */
+.furin-blur-number__columna { position: relative; display: inline-block; }
+.furin-blur-number__fantasma { visibility: hidden; }
+.furin-blur-number__ventana {
+  position: absolute;
+  inset: -0.05em 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 19%, #000 81%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 19%, #000 81%, transparent 100%);
+}
+.furin-blur-number__celda {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0.05em;
+  height: 1.1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+.furin-blur-number__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

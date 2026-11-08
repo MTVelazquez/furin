@@ -1,0 +1,34 @@
+.furin-electric-border {
+  --furin-electric-border-f: 0.85;
+  position: relative;
+  box-sizing: border-box;
+  width: min(var(--furin-electric-border-w), calc(100% - 64px));
+  min-height: var(--furin-electric-border-min);
+  display: grid;
+  border-radius: var(--furin-electric-border-r);
+  background: var(--furin-electric-border-bg);
+  color: #f2f4f8;
+  font-family: Geist, -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  /* El arco ilumina el aire y el interior; el parpadeo (--f) lo escribe el bucle en cada cuadro. */
+  box-shadow:
+    inset 0 0 calc(34px * var(--furin-electric-border-glow)) color-mix(in srgb, var(--furin-electric-border-color) calc(var(--furin-electric-border-f) * 26%), transparent),
+    0 0 calc(70px * var(--furin-electric-border-glow)) color-mix(in srgb, var(--furin-electric-border-color) calc(var(--furin-electric-border-f) * 14%), transparent);
+}
+.furin-electric-border__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px;
+  border-radius: inherit;
+}
+.furin-electric-border__title { margin: 0; font: 650 26px/1.15 Geist, system-ui, sans-serif; letter-spacing: -0.025em; }
+.furin-electric-border__caption { margin: 10px 0 0; font: 400 15px/1.5 Geist, system-ui, sans-serif; color: rgb(255 255 255 / 0.55); max-width: 30ch; }
+.furin-electric-border__canvas {
+  position: absolute;
+  left: calc(var(--furin-electric-border-pad) * -1);
+  top: calc(var(--furin-electric-border-pad) * -1);
+  width: calc(100% + var(--furin-electric-border-pad) * 2);
+  height: calc(100% + var(--furin-electric-border-pad) * 2);
+  pointer-events: none;
+}

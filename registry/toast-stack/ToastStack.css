@@ -1,0 +1,81 @@
+.furin-toast-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  overflow: hidden;
+  font-family: Geist, system-ui, -apple-system, sans-serif;
+  color: #f2f3f5;
+}
+.furin-toast-stack__centro { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 14px; padding-bottom: 60px; }
+.furin-toast-stack__lanzar { appearance: none; padding: 11px 18px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.14); background: rgba(255, 255, 255, 0.06); font: 500 14px/1 Geist, system-ui, sans-serif; color: #fff; cursor: pointer; transition: background-color 0.2s, transform 0.2s; }
+.furin-toast-stack__lanzar:hover { background: rgba(255, 255, 255, 0.1); }
+.furin-toast-stack__lanzar:active { transform: scale(0.97); }
+.furin-toast-stack__lanzar:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.85); outline-offset: 2px; }
+.furin-toast-stack__pista { margin: 0; font: 500 11px/1 "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255, 255, 255, 0.34); }
+
+/* Región anclada a una esquina */
+.furin-toast-stack__region { position: absolute; z-index: 10; width: min(320px, calc(100% - 28px)); padding: 0; pointer-events: none; }
+.furin-toast-stack__region.is-fija { position: fixed; z-index: 2147483000; }
+.furin-toast-stack__region--bottom-right { right: 14px; bottom: 14px; }
+.furin-toast-stack__region--bottom-left { left: 14px; bottom: 14px; }
+.furin-toast-stack__region--bottom-center { left: 50%; bottom: 14px; transform: translateX(-50%); }
+.furin-toast-stack__region--top-right { right: 14px; top: 14px; }
+.furin-toast-stack__region--top-left { left: 14px; top: 14px; }
+.furin-toast-stack__region--top-center { left: 50%; top: 14px; transform: translateX(-50%); }
+.furin-toast-stack__pila { position: relative; width: 100%; pointer-events: auto; transition: height 0.45s cubic-bezier(0.22, 1.1, 0.36, 1); }
+/* El área de la pila se extiende un poco para que el cursor no la "pierda" entre notificaciones. */
+.furin-toast-stack__pila::before { content: ""; position: absolute; inset: -10px; }
+
+.furin-toast-stack__toast {
+  position: absolute;
+  left: 0; right: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 14px 14px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(36, 38, 45, 0.9), rgba(24, 25, 31, 0.92));
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 18px 36px -14px rgba(0, 0, 0, 0.7), 0 4px 10px -4px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  bottom: 0;
+  transform-origin: 50% 100%;
+  transition: transform 0.5s cubic-bezier(0.22, 1.15, 0.36, 1), opacity 0.3s ease, height 0.3s ease;
+  will-change: transform, opacity;
+}
+.furin-toast-stack__region--top-right .furin-toast-stack__toast, .furin-toast-stack__region--top-left .furin-toast-stack__toast, .furin-toast-stack__region--top-center .furin-toast-stack__toast { bottom: auto; top: 0; transform-origin: 50% 0; }
+.furin-toast-stack__toast.is-nuevo { transition: none; }
+.furin-toast-stack__toast.is-saliendo { transition: transform 0.34s cubic-bezier(0.4, 0, 1, 1), opacity 0.28s ease; pointer-events: none; }
+/* Las que quedan detrás de la primera se ven como el borde de una carta: se oculta su contenido y se iguala su altura. */
+.furin-toast-stack__toast.is-tapada { height: var(--furin-toast-frente); }
+.furin-toast-stack__toast.is-tapada > * { opacity: 0; transition: opacity 0.15s; }
+.furin-toast-stack__toast > * { transition: opacity 0.3s 0.08s; }
+
+.furin-toast-stack__icono { display: grid; place-items: center; width: 24px; height: 24px; margin-top: 1px; border-radius: 50%; flex: none; color: var(--c); background: color-mix(in srgb, var(--c) 16%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 40%, transparent); }
+.furin-toast-stack__icono svg { width: 15px; height: 15px; display: block; }
+.furin-toast-stack__toast--info { --c: #8ea2ff; }
+.furin-toast-stack__toast--success { --c: #6ee0a6; }
+.furin-toast-stack__toast--warning { --c: #ffc15e; }
+.furin-toast-stack__toast--error { --c: #ff7a85; }
+
+.furin-toast-stack__cuerpo { flex: 1; min-width: 0; display: grid; gap: 3px; }
+.furin-toast-stack__titulo { margin: 0; font-size: 14px; font-weight: 600; letter-spacing: -0.01em; color: #fff; }
+.furin-toast-stack__desc { margin: 0; font-size: 13px; line-height: 1.4; color: rgba(255, 255, 255, 0.6); }
+.furin-toast-stack__accion { justify-self: start; margin-top: 6px; appearance: none; padding: 5px 10px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.16); background: rgba(255, 255, 255, 0.06); font: 500 12.5px/1 Geist, system-ui, sans-serif; color: #fff; cursor: pointer; }
+.furin-toast-stack__accion:hover { background: rgba(255, 255, 255, 0.12); }
+.furin-toast-stack__cerrar { display: grid; place-items: center; width: 22px; height: 22px; margin: -2px -4px 0 0; padding: 0; appearance: none; border: 0; border-radius: 7px; background: none; color: rgba(255, 255, 255, 0.4); cursor: pointer; flex: none; transition: background-color 0.2s, color 0.2s; }
+.furin-toast-stack__cerrar svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
+.furin-toast-stack__cerrar:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+.furin-toast-stack__cerrar:focus-visible, .furin-toast-stack__accion:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.85); outline-offset: 1px; }
+
+/* Barra de tiempo restante: es una animación CSS que se pausa con el cursor y, al terminar, cierra la notificación. */
+.furin-toast-stack__barra { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: rgba(255, 255, 255, 0.05); }
+.furin-toast-stack__barra i { display: block; height: 100%; transform-origin: left center; background: var(--c); opacity: 0.8; animation: furin-toast-stack-barra var(--furin-toast-ms) linear forwards; }
+@keyframes furin-toast-stack-barra { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .furin-toast-stack__toast, .furin-toast-stack__pila, .furin-toast-stack__toast > * { transition: none !important; }
+  /* La barra se oculta, pero la cuenta regresiva sigue corriendo: es lo que cierra la notificación. */
+  .furin-toast-stack__barra { opacity: 0; }
+}

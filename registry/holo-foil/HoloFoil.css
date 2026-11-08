@@ -1,0 +1,85 @@
+.furin-holo-foil {
+  --hf-x: 62%; --hf-y: 38%; --hf-a: 20deg; --hf-ga: 112deg; --hf-sx: 10%; --hf-sy: -8%; --hf-hue: 10deg;
+  /* Mapas de relieve y destellos generados una sola vez con SVG (ruido fractal + luz difusa). */
+  --hf-crinkle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.007 0.011' numOctaves='5' seed='11'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='14'%3E%3CfeDistantLight azimuth='215' elevation='52'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='640' height='640' filter='url(%23f)'/%3E%3C/svg%3E");
+  --hf-crinkle-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006 0.009' numOctaves='4' seed='23'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0.9 0 0 -0.5'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='gamma' amplitude='2.6' exponent='1.7' offset='-0.2'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='640' height='640' filter='url(%23g)'/%3E%3C/svg%3E");
+  --hf-sparkle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='s' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 80 -58'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23s)'/%3E%3C/svg%3E");
+  --hf-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  min-height: 160px;
+  background: var(--hf-base);
+  touch-action: pan-y;
+}
+.furin-holo-foil > span { position: absolute; inset: 0; pointer-events: none; }
+
+/* Metal de la lámina: bandas de reflejo de estudio que corren al inclinar. */
+.furin-holo-foil__metal {
+  background:
+    linear-gradient(var(--hf-ga),
+      color-mix(in srgb, var(--hf-base) 60%, #3a3c46) calc(var(--hf-x) - 70%),
+      color-mix(in srgb, var(--hf-base) 12%, #8a8e9c) calc(var(--hf-x) - 38%),
+      color-mix(in srgb, var(--hf-base) 80%, #1c1d24) calc(var(--hf-x) - 10%),
+      color-mix(in srgb, var(--hf-base) 15%, #7d8190) calc(var(--hf-x) + 22%),
+      color-mix(in srgb, var(--hf-base) 70%, #30323b) calc(var(--hf-x) + 60%));
+}
+.furin-holo-foil__crinkle {
+  background: var(--hf-crinkle) 0 0 / 620px 620px;
+  mix-blend-mode: overlay;
+  filter: contrast(1.15) brightness(0.9);
+  opacity: 0.7;
+}
+/* Película delgada: el tono manda (blend "color"), la luminancia sale del metal arrugado. */
+.furin-holo-foil__film {
+  background:
+    conic-gradient(from calc(var(--hf-a) * 1.6 + 200deg) at calc(var(--hf-x) - 85%) calc(var(--hf-y) + 95%),
+      #ff3d9a 0deg, #ff8f5a 40deg, #ffd86b 70deg, #66f2b4 120deg, #3cc3ff 170deg, #6a63ff 225deg, #c04dff 285deg, #ff3d9a 360deg);
+  filter: hue-rotate(calc(var(--hf-hue0) + var(--hf-hue))) saturate(1.05);
+  mix-blend-mode: color;
+  opacity: calc(0.78 * min(var(--hf-int), 1.2));
+}
+.furin-holo-foil__film--b {
+  background:
+    conic-gradient(from calc(var(--hf-a) * -1.9 + 40deg) at calc(var(--hf-x) + 85%) calc(var(--hf-y) - 95%),
+      #35e8d0 0deg, #4f86ff 60deg, #b24dff 125deg, #ff5aa0 190deg, #ffb86b 250deg, #86ec7a 310deg, #35e8d0 360deg);
+  filter: hue-rotate(calc(var(--hf-hue0) - var(--hf-hue) * 0.7)) saturate(1.05) blur(7px);
+  mix-blend-mode: color;
+  opacity: calc(0.62 * min(var(--hf-int), 1.2));
+  -webkit-mask-image: var(--hf-crinkle-mask);
+  mask-image: var(--hf-crinkle-mask);
+  -webkit-mask-size: 560px 560px;
+  mask-size: 560px 560px;
+}
+/* Rejilla difractiva: líneas finísimas cuyo arcoíris corre al inclinar. */
+.furin-holo-foil__grating {
+  background: linear-gradient(var(--hf-ga), #ff3d8b, #ffb347, #e5ff6a, #4dffc4, #4da6ff, #9a6bff, #ff3d8b, #ffb347, #e5ff6a, #4dffc4) calc(50% + var(--hf-sx)) calc(50% + var(--hf-sy)) / 240% 240%;
+  -webkit-mask-image: repeating-linear-gradient(var(--hf-ga), #0000 0 calc(var(--hf-den) * 0.45), #000 calc(var(--hf-den) * 0.5) calc(var(--hf-den) * 0.95), #0000 var(--hf-den));
+  mask-image: repeating-linear-gradient(var(--hf-ga), #0000 0 calc(var(--hf-den) * 0.45), #000 calc(var(--hf-den) * 0.5) calc(var(--hf-den) * 0.95), #0000 var(--hf-den));
+  mix-blend-mode: color-dodge;
+  opacity: calc(0.32 * var(--hf-int));
+  filter: hue-rotate(var(--hf-hue0));
+}
+.furin-holo-foil__glint {
+  background:
+    radial-gradient(30% 26% at var(--hf-x) var(--hf-y), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 100%),
+    radial-gradient(80% 62% at var(--hf-x) var(--hf-y), rgba(255, 238, 225, 0.2), rgba(255, 255, 255, 0) 100%);
+  mix-blend-mode: overlay;
+  opacity: calc(0.45 + 0.4 * var(--hf-int));
+}
+/* Destellos puntuales que solo viven cerca del reflejo. */
+.furin-holo-foil__sparkle {
+  background: var(--hf-sparkle) 0 0 / 300px 300px;
+  mix-blend-mode: plus-lighter;
+  opacity: calc(0.3 * var(--hf-int));
+  -webkit-mask-image: radial-gradient(32% 28% at var(--hf-x) var(--hf-y), #000 15%, transparent 100%);
+  mask-image: radial-gradient(32% 28% at var(--hf-x) var(--hf-y), #000 15%, transparent 100%);
+}
+.furin-holo-foil__grain {
+  background: var(--hf-grain) 0 0 / 200px 200px;
+  mix-blend-mode: overlay;
+  opacity: 0.2;
+}
+.furin-holo-foil__content { position: relative; z-index: 2; width: 100%; height: 100%; display: grid; place-items: center; }

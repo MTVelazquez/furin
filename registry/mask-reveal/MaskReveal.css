@@ -1,0 +1,55 @@
+.furin-mask-reveal {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1em;
+  width: min(100%, 31em);
+  box-sizing: border-box;
+  padding-inline: 0.65em;
+  font-family: "Geist", "Inter", "SF Pro Display", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--furin-mr-size);
+  color: var(--furin-mr-color);
+  -webkit-font-smoothing: antialiased;
+}
+.furin-mask-reveal[data-align="center"] { align-items: center; text-align: center; }
+.furin-mask-reveal[data-align="left"] { align-items: flex-start; text-align: left; }
+.furin-mask-reveal__texto { margin: 0; font-weight: 650; line-height: 1.08; letter-spacing: -0.035em; }
+/* Cada línea es una ventana: lo que queda fuera de ella no se ve. El relleno vertical protege las astas y las colas. */
+.furin-mask-reveal__linea {
+  display: block;
+  overflow: hidden;
+  padding: 0.12em 0.04em 0.18em;
+  margin: -0.12em -0.04em -0.18em;
+}
+.furin-mask-reveal__linea[data-tenue="1"] { color: var(--furin-mr-dim); }
+.furin-mask-reveal__dentro {
+  display: block;
+  transform-origin: 0 100%;
+  transform: translateY(0) rotate(0);
+  transition: transform var(--furin-mr-dur) cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i) * var(--furin-mr-stagger));
+  will-change: transform;
+}
+.furin-mask-reveal[data-estado="oculto"] .furin-mask-reveal__dentro { transform: translateY(115%) rotate(3.5deg); transition: none; }
+.furin-mask-reveal__boton {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: 0.15em;
+  padding: 0.5em 0.95em 0.5em 0.8em;
+  font: 500 14px/1 "Geist", "Inter", system-ui, sans-serif;
+  letter-spacing: 0;
+  color: color-mix(in srgb, var(--furin-mr-color) 82%, transparent);
+  background: color-mix(in srgb, var(--furin-mr-color) 7%, transparent);
+  border: 1px solid color-mix(in srgb, var(--furin-mr-color) 16%, transparent);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.furin-mask-reveal__boton:hover { color: var(--furin-mr-color); background: color-mix(in srgb, var(--furin-mr-color) 13%, transparent); border-color: color-mix(in srgb, var(--furin-mr-color) 30%, transparent); }
+.furin-mask-reveal__boton:active { transform: scale(0.96); }
+.furin-mask-reveal__boton:focus-visible { outline: 2px solid color-mix(in srgb, var(--furin-mr-color) 70%, transparent); outline-offset: 3px; }
+.furin-mask-reveal__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .furin-mask-reveal__dentro, .furin-mask-reveal[data-estado="oculto"] .furin-mask-reveal__dentro { transform: none; transition: none; }
+  .furin-mask-reveal__boton { display: none; }
+}

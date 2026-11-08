@@ -1,0 +1,105 @@
+.furin-bento-light {
+  position: relative;
+  width: min(var(--furin-bento-light-w), calc(100% - 40px));
+  aspect-ratio: 11 / 10;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  grid-template-areas: "a a b" "a a c" "d e f";
+  gap: var(--furin-bento-light-gap);
+  font-family: Geist, -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  touch-action: pan-y;
+}
+.furin-bento-light__cell--0 { grid-area: a; }
+.furin-bento-light__cell--1 { grid-area: b; }
+.furin-bento-light__cell--2 { grid-area: c; }
+.furin-bento-light__cell--3 { grid-area: d; }
+.furin-bento-light__cell--4 { grid-area: e; }
+.furin-bento-light__cell--5 { grid-area: f; }
+
+.furin-bento-light__cell {
+  --furin-bento-light-lx: -999px;
+  --furin-bento-light-ly: -999px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 20px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: rgb(255 255 255 / 0.6);
+  background: linear-gradient(180deg, #14161c, #101216);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+  transition: color 0.4s, box-shadow 0.5s;
+}
+/* Derrame de luz sobre la celda: el mismo foco, visto desde el marco de cada celda. */
+.furin-bento-light__cell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(var(--furin-bento-light-r) circle at var(--furin-bento-light-lx) var(--furin-bento-light-ly), color-mix(in srgb, var(--furin-bento-light-color) 38%, transparent), transparent 70%);
+}
+/* Borde que se enciende cerca de la luz. */
+.furin-bento-light__cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background:
+    radial-gradient(calc(var(--furin-bento-light-r) * 0.9) circle at var(--furin-bento-light-lx) var(--furin-bento-light-ly), color-mix(in srgb, var(--furin-bento-light-color) 80%, #fff), transparent 72%),
+    linear-gradient(rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.08));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.furin-bento-light__cell[data-lit="true"] {
+  color: rgb(255 255 255 / 0.92);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1), 0 0 44px -10px color-mix(in srgb, var(--furin-bento-light-color) 55%, transparent);
+}
+/* Puntos que solo existen donde llega la luz. */
+.furin-bento-light__dots {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.55) 0.9px, transparent 1.3px) 0 0 / 14px 14px;
+  -webkit-mask-image: radial-gradient(calc(var(--furin-bento-light-r) * 0.62) circle at var(--furin-bento-light-lx) var(--furin-bento-light-ly), #000, transparent);
+  mask-image: radial-gradient(calc(var(--furin-bento-light-r) * 0.62) circle at var(--furin-bento-light-lx) var(--furin-bento-light-ly), #000, transparent);
+}
+.furin-bento-light__icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  background: rgb(255 255 255 / 0.05);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08);
+  transition: color 0.4s, box-shadow 0.4s, background 0.4s;
+}
+.furin-bento-light__cell[data-lit="true"] .furin-bento-light__icon {
+  color: color-mix(in srgb, var(--furin-bento-light-color) 70%, #fff);
+  background: color-mix(in srgb, var(--furin-bento-light-color) 14%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--furin-bento-light-color) 45%, transparent), 0 0 18px -2px color-mix(in srgb, var(--furin-bento-light-color) 55%, transparent);
+}
+.furin-bento-light__icon svg { width: 18px; height: 18px; }
+.furin-bento-light__body { display: grid; gap: 4px; }
+.furin-bento-light__body strong { font: 600 15px/1.2 Geist, system-ui, sans-serif; letter-spacing: -0.01em; color: #f4f5f8; }
+.furin-bento-light__body span { font: 400 12.5px/1.4 Geist, system-ui, sans-serif; }
+.furin-bento-light__cell--0 { padding: 22px; }
+.furin-bento-light__cell--0 .furin-bento-light__body strong { font-size: 20px; letter-spacing: -0.02em; }
+.furin-bento-light__cell--0 .furin-bento-light__body span:not(.furin-bento-light__metric) { font-size: 14px; max-width: 24ch; }
+.furin-bento-light__metric {
+  font: 700 clamp(48px, 15cqw, 76px)/1 Geist, system-ui, sans-serif !important;
+  letter-spacing: -0.045em;
+  color: transparent;
+  background: linear-gradient(180deg, #fff 20%, color-mix(in srgb, var(--furin-bento-light-color) 60%, #fff 0%) 120%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+@media (max-width: 420px) { .furin-bento-light__body span:not(.furin-bento-light__metric) { display: none; } .furin-bento-light__cell--0 .furin-bento-light__body span:not(.furin-bento-light__metric) { display: block; } }

@@ -1,0 +1,28 @@
+.furin-gold-foil-text {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  font-family: "Geist", "Inter", "SF Pro Display", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0.06em;
+  text-align: center;
+  isolation: isolate;
+}
+/* El texto real sigue en el DOM (se lee, se selecciona, se copia); la lámina la pinta el lienzo encima. */
+.furin-gold-foil-text__texto {
+  display: block;
+  white-space: pre;
+  color: transparent;
+}
+/* Mientras WebGL no está listo (o no existe) queda un degradado dorado de CSS. */
+.furin-gold-foil-text:not([data-gl]) .furin-gold-foil-text__texto {
+  background: linear-gradient(180deg, #fff2c2 0%, #f6c453 40%, #8a5a12 52%, #e8b13f 70%, #fff0b0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.furin-gold-foil-text__lienzo {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}

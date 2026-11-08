@@ -1,0 +1,67 @@
+.furin-elastic-slider {
+  --furin-es-color: #f3f4f7;
+  --furin-es-origen: left center;
+  --furin-es-sx: 1;
+  --furin-es-sy: 1;
+  --furin-es-fill: 60%;
+  --furin-es-x: 60%;
+  --furin-es-press: 0;
+  --furin-es-izq: 0px;
+  --furin-es-der: 0px;
+  display: grid;
+  gap: 14px;
+  width: min(400px, 90%);
+  font-family: Geist, system-ui, -apple-system, sans-serif;
+  color: #f2f3f5;
+  user-select: none;
+}
+.furin-elastic-slider__cab { display: flex; align-items: baseline; justify-content: space-between; }
+.furin-elastic-slider__etq { font-size: 14px; font-weight: 500; letter-spacing: -0.01em; color: rgba(255, 255, 255, 0.75); }
+.furin-elastic-slider__valor { font: 500 14px/1 "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace; font-variant-numeric: tabular-nums; color: #fff; }
+
+.furin-elastic-slider__fila { display: flex; align-items: center; gap: 14px; }
+.furin-elastic-slider__ico { display: grid; place-items: center; width: 22px; height: 22px; flex: none; color: rgba(255, 255, 255, 0.55); will-change: transform; }
+.furin-elastic-slider__ico svg { width: 100%; height: 100%; display: block; }
+/* Los íconos de los extremos acompañan el estiramiento y se ven más vivos al tirar. */
+.furin-elastic-slider__ico--izq { transform: translateX(var(--furin-es-izq)); }
+.furin-elastic-slider__ico--der { transform: translateX(var(--furin-es-der)); }
+
+.furin-elastic-slider__zona { position: relative; flex: 1; height: 44px; display: grid; align-items: center; cursor: grab; touch-action: pan-y; outline: none; border-radius: 22px; }
+.furin-elastic-slider__zona.is-arrastra { cursor: grabbing; }
+.furin-elastic-slider__zona:focus-visible { box-shadow: 0 0 0 2px rgba(142, 162, 255, 0.7); }
+
+/* Pista: se estira en X desde el lado contrario al tirón y se aplasta un poco en Y para conservar el volumen. */
+.furin-elastic-slider__pista {
+  position: relative;
+  height: calc(12px + var(--furin-es-press) * 6px);
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.11);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  transform: scale(var(--furin-es-sx), var(--furin-es-sy));
+  transform-origin: var(--furin-es-origen);
+  will-change: transform;
+}
+.furin-elastic-slider__relleno {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--furin-es-fill);
+  border-radius: inherit;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--furin-es-color) 100%, #fff 20%), var(--furin-es-color) 60%, color-mix(in srgb, var(--furin-es-color) 82%, #000));
+  box-shadow: 0 0 20px -2px color-mix(in srgb, var(--furin-es-color) 45%, transparent);
+}
+/* Tirador: una cápsula en el extremo del relleno; fuera de la pista para no deformarse al estirar. */
+.furin-elastic-slider__tirador {
+  position: absolute;
+  left: 0; top: 50%;
+  width: 4px;
+  height: calc(22px + var(--furin-es-press) * 4px);
+  margin: calc(-11px - var(--furin-es-press) * 2px) 0 0 -2px;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.12);
+  transform: translateX(var(--furin-es-x)) translateX(-5px);
+  pointer-events: none;
+}
+.furin-elastic-slider__zona:hover .furin-elastic-slider__ico { color: #fff; }
+@media (prefers-reduced-motion: reduce) { .furin-elastic-slider__pista, .furin-elastic-slider__tirador { transition: none; } }

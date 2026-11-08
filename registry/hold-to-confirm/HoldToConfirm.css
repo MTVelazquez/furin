@@ -1,0 +1,111 @@
+.furin-hold-to-confirm {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  font-family: Geist, -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+}
+.furin-hold-to-confirm__btn {
+  --furin-hold-to-confirm-p: 0;
+  --furin-hold-to-confirm-jx: 0px;
+  --furin-hold-to-confirm-jy: 0px;
+  position: relative;
+  width: var(--furin-hold-to-confirm-size);
+  height: var(--furin-hold-to-confirm-size);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: rgb(255 255 255 / 0.82);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+  outline: none;
+  /* Se comprime a medida que se llena el anillo. */
+  transform: translate(var(--furin-hold-to-confirm-jx), var(--furin-hold-to-confirm-jy)) scale(calc(1 - var(--furin-hold-to-confirm-p) * 0.07));
+  transition: scale 0.4s cubic-bezier(0.3, 1.7, 0.5, 1);
+}
+.furin-hold-to-confirm__btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.furin-hold-to-confirm__btn:focus-visible { box-shadow: 0 0 0 3px rgb(255 255 255 / 0.55); }
+/* Resplandor del color que crece con el progreso. */
+.furin-hold-to-confirm__glow {
+  position: absolute;
+  inset: -22%;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--furin-hold-to-confirm-color) 70%, transparent), transparent 62%);
+  opacity: calc(var(--furin-hold-to-confirm-p) * 0.55);
+  pointer-events: none;
+}
+.is-done .furin-hold-to-confirm__glow { background: radial-gradient(circle, color-mix(in srgb, var(--furin-hold-to-confirm-ok) 70%, transparent), transparent 62%); opacity: 0.55; transition: opacity 0.4s; }
+.furin-hold-to-confirm__face {
+  position: absolute;
+  inset: 9%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background:
+    radial-gradient(90% 70% at 50% 8%, rgb(255 255 255 / 0.14), transparent 62%),
+    radial-gradient(circle at 50% 40%, #272a33, #15171c 78%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 -6px 10px rgb(0 0 0 / 0.5),
+    0 0 0 1px rgb(255 255 255 / 0.06),
+    0 10px 18px -6px rgb(0 0 0 / 0.75);
+}
+.furin-hold-to-confirm__btn:active:not(.is-done) .furin-hold-to-confirm__face { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12), inset 0 -3px 8px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(255 255 255 / 0.06), 0 4px 10px -4px rgb(0 0 0 / 0.75); }
+.furin-hold-to-confirm__icon { display: grid; place-items: center; width: 34%; height: 34%; transition: transform 0.3s, opacity 0.2s; }
+.furin-hold-to-confirm__icon svg { width: 100%; height: 100%; }
+.furin-hold-to-confirm__btn[data-x] .furin-hold-to-confirm__icon { color: var(--furin-hold-to-confirm-color); }
+.furin-hold-to-confirm__check {
+  position: absolute;
+  width: 38%;
+  height: 38%;
+  color: var(--furin-hold-to-confirm-ok);
+  opacity: 0;
+}
+.furin-hold-to-confirm__check path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.is-done .furin-hold-to-confirm__icon { transform: scale(0.4); opacity: 0; }
+.is-done .furin-hold-to-confirm__check { opacity: 1; }
+.is-done .furin-hold-to-confirm__check path { animation: furin-hold-to-confirm-draw 0.45s 0.12s cubic-bezier(0.5, 0, 0.2, 1) forwards; }
+.furin-hold-to-confirm__ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.furin-hold-to-confirm__track { stroke: rgb(255 255 255 / 0.1); }
+.furin-hold-to-confirm__arc { filter: drop-shadow(0 0 5px color-mix(in srgb, var(--furin-hold-to-confirm-color) 80%, transparent)); }
+.furin-hold-to-confirm__head { filter: drop-shadow(0 0 4px var(--furin-hold-to-confirm-color)) drop-shadow(0 0 8px var(--furin-hold-to-confirm-color)); }
+.is-done .furin-hold-to-confirm__arc { stroke: var(--furin-hold-to-confirm-ok); filter: drop-shadow(0 0 7px var(--furin-hold-to-confirm-ok)); transition: stroke 0.2s; }
+/* Vibración al completar: sacudida que se amortigua. */
+.is-done { animation: furin-hold-to-confirm-shake 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
+/* Onda de choque. */
+.furin-hold-to-confirm__burst {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--furin-hold-to-confirm-ok);
+  opacity: 0;
+  pointer-events: none;
+}
+.is-done .furin-hold-to-confirm__burst { animation: furin-hold-to-confirm-burst 0.7s cubic-bezier(0.2, 0.6, 0.2, 1) forwards; }
+.furin-hold-to-confirm__label {
+  min-height: 1.2em;
+  font: 500 14px/1.2 Geist, system-ui, sans-serif;
+  letter-spacing: 0.005em;
+  color: rgb(255 255 255 / 0.55);
+  transition: color 0.25s;
+}
+[data-phase="holding"] .furin-hold-to-confirm__label { color: rgb(255 255 255 / 0.9); }
+[data-phase="done"] .furin-hold-to-confirm__label { color: var(--furin-hold-to-confirm-ok); }
+.furin-hold-to-confirm__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@keyframes furin-hold-to-confirm-draw { to { stroke-dashoffset: 0; } }
+@keyframes furin-hold-to-confirm-burst { 0% { opacity: 0.9; transform: scale(1); } 100% { opacity: 0; transform: scale(2); border-width: 0.5px; } }
+@keyframes furin-hold-to-confirm-shake {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  10% { translate: -6px 0; rotate: -2deg; } 22% { translate: 5px 0; rotate: 1.6deg; } 34% { translate: -4px 0; rotate: -1.2deg; }
+  46% { translate: 3px 0; rotate: 0.8deg; } 58% { translate: -2px 0; rotate: -0.5deg; } 72% { translate: 1px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-done { animation: none; }
+  .furin-hold-to-confirm__btn { transition: none; }
+  .is-done .furin-hold-to-confirm__burst { animation: none; }
+}

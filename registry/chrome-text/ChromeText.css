@@ -1,0 +1,28 @@
+.furin-chrome-text {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  font-family: "Geist", "Inter", "SF Pro Display", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-align: center;
+  isolation: isolate;
+}
+/* El texto real sigue en el DOM (se lee, se selecciona, se copia); el cromo lo pinta el lienzo encima. */
+.furin-chrome-text__texto {
+  display: block;
+  white-space: pre;
+  color: transparent;
+}
+/* Mientras WebGL no está listo (o no existe) queda un degradado cromado de CSS. */
+.furin-chrome-text:not([data-gl]) .furin-chrome-text__texto {
+  background: linear-gradient(180deg, #ffffff 0%, #cfd6e0 38%, #4a5160 50%, #aeb8c6 62%, #f4f7fb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.furin-chrome-text__lienzo {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}

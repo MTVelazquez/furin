@@ -1,0 +1,93 @@
+.furin-glass-segmented {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--furin-glass-segmented-n), minmax(78px, 1fr));
+  height: var(--furin-glass-segmented-h);
+  padding: var(--furin-glass-segmented-pad);
+  border-radius: 999px;
+  font-family: Geist, system-ui, -apple-system, sans-serif;
+  color: #fff;
+  touch-action: manipulation;
+}
+.furin-glass-segmented__riel {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(10, 14, 50, 0.32), rgba(10, 14, 50, 0.12));
+  /* Riel hundido: sombra interior arriba, luz fina abajo. */
+  box-shadow:
+    inset 0 2px 6px rgba(5, 8, 30, 0.45),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.28),
+    0 10px 20px -10px rgba(5, 8, 30, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.furin-glass-segmented__op {
+  position: relative;
+  z-index: 1;
+  border: 0;
+  background: none;
+  padding: 0 14px;
+  color: rgba(255, 255, 255, 0.66);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  border-radius: 999px;
+  outline: none;
+  transition: color 0.25s;
+  -webkit-tap-highlight-color: transparent;
+}
+.furin-glass-segmented__op:hover { color: rgba(255, 255, 255, 0.9); }
+.furin-glass-segmented__op.is-on { color: #fff; }
+.furin-glass-segmented__op:focus-visible { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7); }
+.furin-glass-segmented__lente {
+  --furin-glass-segmented-lit: 0;
+  position: absolute;
+  z-index: 2;
+  top: var(--furin-glass-segmented-pad);
+  bottom: var(--furin-glass-segmented-pad);
+  left: var(--furin-glass-segmented-pad);
+  width: calc((100% - var(--furin-glass-segmented-pad) * 2) / var(--furin-glass-segmented-n));
+  border-radius: 999px;
+  pointer-events: none;
+  transform-origin: center;
+}
+.furin-glass-segmented__cristal {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, calc(0.3 + var(--furin-glass-segmented-lit) * 0.15)), rgba(255, 255, 255, 0.05) 55%, rgba(255, 255, 255, 0.14)),
+    rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 8px 14px -6px rgba(5, 8, 30, 0.55),
+    0 2px 4px rgba(5, 8, 30, 0.3),
+    inset 0 -6px 10px -4px rgba(255, 255, 255, 0.3),
+    inset 0 8px 10px -8px rgba(255, 255, 255, 0.55);
+}
+.furin-glass-segmented__rim {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.3px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.1) 32%, rgba(255, 255, 255, 0.04) 62%, rgba(255, 255, 255, 0.6));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+@media (prefers-reduced-motion: reduce) { .furin-glass-segmented__op { transition: none; } }
+
+/* Escena de color: formas con borde nítido para que la refracción se note (solo se pinta con scene). */
+.furin-glass-segmented-scene { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: linear-gradient(160deg, #0d1236 0%, #1b0f3d 55%, #0b2335 100%); }
+.furin-glass-segmented-scene i { position: absolute; border-radius: 50%; animation: furin-glass-segmented-flota var(--t, 14s) ease-in-out infinite alternate; }
+.furin-glass-segmented-scene i:nth-child(1) { --t: 13s; --dx: 80px; --dy: 40px; width: 190px; height: 190px; left: 6%; top: 10%; background: radial-gradient(circle at 32% 28%, #ffd0ea 0, #ff5aa5 42%, #c21f78 100%); }
+.furin-glass-segmented-scene i:nth-child(2) { --t: 17s; --dx: -70px; --dy: -50px; width: 230px; height: 230px; right: 0%; top: 28%; background: radial-gradient(circle at 34% 30%, #bcd3ff, #4f7dff 45%, #2437c9); }
+.furin-glass-segmented-scene i:nth-child(3) { --t: 11s; --dx: 90px; --dy: -60px; width: 150px; height: 150px; left: 30%; bottom: -4%; background: radial-gradient(circle at 34% 30%, #d3fff3, #37e0b9 45%, #0a8e86); }
+.furin-glass-segmented-scene i:nth-child(4) { --t: 9s; --dx: -60px; --dy: 70px; width: 90px; height: 90px; right: 28%; top: 4%; background: radial-gradient(circle at 34% 30%, #fff2cc, #ffb347 50%, #e6700f); }
+.furin-glass-segmented-scene b { position: absolute; inset: -10% -14%; background: repeating-linear-gradient(105deg, transparent 0 44px, rgba(255, 255, 255, 0.22) 44px 47px); animation: furin-glass-segmented-lineas 12s ease-in-out infinite alternate; }
+@keyframes furin-glass-segmented-flota { to { transform: translate(var(--dx), var(--dy)) scale(1.1); } }
+@keyframes furin-glass-segmented-lineas { to { transform: translateX(-70px); } }
+@media (prefers-reduced-motion: reduce) { .furin-glass-segmented-scene i, .furin-glass-segmented-scene b { animation: none; } }

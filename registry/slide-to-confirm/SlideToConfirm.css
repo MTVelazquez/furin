@@ -1,0 +1,95 @@
+.furin-slide-to-confirm {
+  --furin-slide-to-confirm-p: 0;
+  --furin-slide-to-confirm-x: 0px;
+  position: relative;
+  width: min(var(--furin-slide-to-confirm-w), calc(100% - 40px));
+  height: var(--furin-slide-to-confirm-h);
+  border-radius: 999px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, #0e1015, #171a21);
+  box-shadow: inset 0 2px 6px rgb(0 0 0 / 0.7), inset 0 0 0 1px rgb(255 255 255 / 0.07), 0 1px 0 rgb(255 255 255 / 0.06), 0 16px 28px -14px rgb(0 0 0 / 0.8);
+  font-family: Geist, -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+  outline: none;
+}
+.furin-slide-to-confirm:focus-visible { box-shadow: inset 0 2px 6px rgb(0 0 0 / 0.7), inset 0 0 0 1px rgb(255 255 255 / 0.07), 0 0 0 3px rgb(255 255 255 / 0.55); }
+.furin-slide-to-confirm[data-disabled="true"] { opacity: 0.45; }
+/* Estela de color que el pomo va dejando atrás. */
+.furin-slide-to-confirm__fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: calc(var(--furin-slide-to-confirm-x) + var(--furin-slide-to-confirm-h) - var(--furin-slide-to-confirm-pad));
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.22), transparent 55%),
+    linear-gradient(90deg, color-mix(in srgb, var(--furin-slide-to-confirm-a) 40%, transparent), var(--furin-slide-to-confirm-b));
+  opacity: calc(var(--furin-slide-to-confirm-p) * 4);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--furin-slide-to-confirm-b) 60%, transparent);
+  transition: background 0.35s;
+}
+[data-phase="done"] .furin-slide-to-confirm__fill { background: linear-gradient(180deg, rgb(255 255 255 / 0.25), transparent 55%), linear-gradient(90deg, color-mix(in srgb, var(--furin-slide-to-confirm-ok) 55%, transparent), var(--furin-slide-to-confirm-ok)); opacity: 1; box-shadow: 0 0 30px color-mix(in srgb, var(--furin-slide-to-confirm-ok) 60%, transparent); }
+.furin-slide-to-confirm__label,
+.furin-slide-to-confirm__done {
+  position: relative;
+  padding-left: calc(var(--furin-slide-to-confirm-h) * 0.55);
+  font: 500 16px/1 Geist, system-ui, sans-serif;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  pointer-events: none;
+  grid-area: 1 / 1;
+}
+/* Texto con un brillo que lo recorre, como en los desbloqueos de móvil. */
+.furin-slide-to-confirm__label {
+  color: transparent;
+  background: linear-gradient(100deg, rgb(255 255 255 / 0.38) 38%, rgb(255 255 255 / 0.95) 50%, rgb(255 255 255 / 0.38) 62%) 0 0 / 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: furin-slide-to-confirm-shine 2.6s linear infinite;
+  opacity: calc(1 - var(--furin-slide-to-confirm-p) * 1.7);
+  transform: translateX(calc(var(--furin-slide-to-confirm-p) * 26px));
+}
+.furin-slide-to-confirm__done { color: #fff; font-weight: 600; opacity: 0; transform: translateX(12px); transition: opacity 0.3s 0.15s, transform 0.4s 0.15s cubic-bezier(0.2, 0.8, 0.2, 1); text-shadow: 0 1px 6px rgb(0 0 0 / 0.25); }
+[data-phase="done"] .furin-slide-to-confirm__done { opacity: 1; transform: none; padding-left: 0; padding-right: calc(var(--furin-slide-to-confirm-h) * 0.5); justify-self: center; }
+[data-phase="done"] .furin-slide-to-confirm__label { opacity: 0; }
+.furin-slide-to-confirm__knob {
+  position: absolute;
+  left: var(--furin-slide-to-confirm-pad);
+  top: var(--furin-slide-to-confirm-pad);
+  width: calc(var(--furin-slide-to-confirm-h) - var(--furin-slide-to-confirm-pad) * 2);
+  height: calc(var(--furin-slide-to-confirm-h) - var(--furin-slide-to-confirm-pad) * 2);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #1a1c24;
+  cursor: grab;
+  touch-action: none;
+  background:
+    radial-gradient(90% 70% at 50% 8%, rgb(255 255 255 / 0.95), rgb(255 255 255 / 0) 60%),
+    linear-gradient(180deg, #f6f7fb, #cfd3de);
+  box-shadow: inset 0 1px 0 #fff, inset 0 -3px 5px rgb(60 70 100 / 0.25), 0 1px 2px rgb(0 0 0 / 0.5), 0 8px 14px -3px rgb(0 0 0 / 0.55);
+  transform-origin: 0 50%;
+  will-change: transform;
+}
+.furin-slide-to-confirm__knob[data-drag="true"] { cursor: grabbing; box-shadow: inset 0 1px 0 #fff, inset 0 -3px 5px rgb(60 70 100 / 0.25), 0 1px 2px rgb(0 0 0 / 0.5), 0 12px 20px -3px rgb(0 0 0 / 0.65); }
+[data-phase="done"] .furin-slide-to-confirm__knob { cursor: default; color: #0b6b4b; }
+.furin-slide-to-confirm__arrow, .furin-slide-to-confirm__check { position: absolute; width: 44%; height: 44%; transition: opacity 0.2s, transform 0.35s cubic-bezier(0.3, 1.6, 0.5, 1); }
+.furin-slide-to-confirm__check { opacity: 0; transform: scale(0.4); }
+.furin-slide-to-confirm__check path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+[data-phase="done"] .furin-slide-to-confirm__arrow { opacity: 0; transform: scale(0.4); }
+[data-phase="done"] .furin-slide-to-confirm__check { opacity: 1; transform: none; }
+[data-phase="done"] .furin-slide-to-confirm__check path { animation: furin-slide-to-confirm-draw 0.4s 0.1s cubic-bezier(0.5, 0, 0.2, 1) forwards; }
+.furin-slide-to-confirm__burst { position: absolute; inset: 0; border-radius: 50%; border: 2px solid #fff; opacity: 0; pointer-events: none; }
+[data-phase="done"] .furin-slide-to-confirm__burst { animation: furin-slide-to-confirm-burst 0.6s ease-out; }
+@keyframes furin-slide-to-confirm-shine { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+@keyframes furin-slide-to-confirm-draw { to { stroke-dashoffset: 0; } }
+@keyframes furin-slide-to-confirm-burst { 0% { opacity: 0.9; transform: scale(1); } 100% { opacity: 0; transform: scale(2.4); } }
+@media (prefers-reduced-motion: reduce) {
+  .furin-slide-to-confirm__label { animation: none; background-position: 50% 0; }
+  .furin-slide-to-confirm__done, .furin-slide-to-confirm__arrow, .furin-slide-to-confirm__check { transition: none; }
+}

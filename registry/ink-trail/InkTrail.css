@@ -1,0 +1,11 @@
+.furin-ink-trail {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+.furin-ink-trail__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; z-index: 2; }
+.furin-ink-trail__contenido { position: relative; z-index: 1; width: 100%; height: 100%; display: grid; place-items: center; pointer-events: none; }
+.furin-ink-trail__contenido > * { pointer-events: auto; }

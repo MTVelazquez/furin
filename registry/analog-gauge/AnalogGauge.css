@@ -1,0 +1,119 @@
+@property --fag-x { syntax: "<number>"; inherits: true; initial-value: 0.5; }
+@property --fag-y { syntax: "<number>"; inherits: true; initial-value: 0.5; }
+
+.furin-analog-gauge {
+  --fag-size: 320px;
+  --fag-accent: #ff6a2a;
+  position: relative;
+  width: var(--fag-size);
+  height: var(--fag-size);
+  border-radius: 50%;
+  isolation: isolate;
+  transition: --fag-x 0.5s cubic-bezier(0.2, 0.75, 0.25, 1), --fag-y 0.5s cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+/* Bisel cromado: reflejos de estudio en un cono y cepillado radial muy fino. */
+.furin-analog-gauge__bezel {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 205deg, #70767f 0%, #f5f7f9 7%, #454b53 16%, #bcc2ca 26%, #fcfdfd 35%, #5a6068 46%, #9ca3ad 57%, #f6f8fa 67%, #4a5058 79%, #adb3bc 90%, #70767f 100%);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.75),
+    0 6px 10px rgba(0, 0, 0, 0.55),
+    0 26px 36px -8px rgba(0, 0, 0, 0.85),
+    0 40px 60px -26px rgba(190, 205, 225, 0.22);
+}
+.furin-analog-gauge__bezel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.07) 0deg 0.45deg, rgba(0, 0, 0, 0.08) 0.45deg 0.9deg);
+  mix-blend-mode: overlay;
+}
+/* Chaflán interior: el mismo cromo con la luz invertida. */
+.furin-analog-gauge__chamfer {
+  position: absolute;
+  inset: 3.6%;
+  border-radius: 50%;
+  background: conic-gradient(from 25deg, #2c3037 0%, #a9b0b9 9%, #20242a 20%, #7b828c 31%, #d9dee4 40%, #2a2e34 52%, #8d949e 63%, #cdd2d9 73%, #23272d 85%, #8a919b 94%, #2c3037 100%);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.55), inset 0 2px 3px rgba(255, 255, 255, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+.furin-analog-gauge__dial {
+  position: absolute;
+  inset: 7.2%;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.018) 0deg 1deg, rgba(0, 0, 0, 0) 1deg 2deg),
+    radial-gradient(circle at 50% 34%, #2a2e36 0%, #14161a 58%, #08090b 100%);
+  box-shadow:
+    inset 0 7px 16px rgba(0, 0, 0, 0.9),
+    inset 0 -2px 8px rgba(255, 255, 255, 0.04),
+    0 0 0 1px rgba(0, 0, 0, 0.8);
+}
+
+.furin-analog-gauge__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.furin-analog-gauge__tick { stroke: #c9ced6; stroke-width: 1.7; stroke-linecap: butt; }
+.furin-analog-gauge__tick.is-major { stroke: #f1f3f6; stroke-width: 3.4; }
+.furin-analog-gauge__tick.is-red { stroke: #ee4b50; }
+.furin-analog-gauge__zone { fill: none; stroke: #d93a3f; stroke-width: 6; opacity: 0.92; filter: drop-shadow(0 0 5px rgba(238, 75, 80, 0.55)); }
+.furin-analog-gauge__num { font: 600 18px / 1 "Geist", system-ui, -apple-system, "Segoe UI", sans-serif; fill: #eef0f3; font-variant-numeric: tabular-nums; }
+.furin-analog-gauge__num.is-red { fill: #ff7a7e; }
+.furin-analog-gauge__label { font: 600 12px / 1 ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace; letter-spacing: 0.28em; text-transform: uppercase; fill: #8b929c; }
+.furin-analog-gauge__unit { font: 700 20px / 1 "Geist", system-ui, sans-serif; letter-spacing: 0.06em; fill: #eef0f3; }
+.furin-analog-gauge__tipL { fill: var(--fag-accent); }
+.furin-analog-gauge__tipR { fill: color-mix(in srgb, var(--fag-accent) 52%, #000); }
+
+/* Eje: casquillo de acero con la aguja pasando por debajo. */
+.furin-analog-gauge__hub {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 11.5%;
+  height: 11.5%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0) 0 28%, rgba(0, 0, 0, 0.35) 30%, rgba(255, 255, 255, 0.35) 33%, rgba(255, 255, 255, 0) 38%),
+    radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 42%),
+    conic-gradient(from 40deg, #f1f4f7, #7d848e, #fafbfc, #5b626b, #eef1f4, #8a919b, #f1f4f7);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 5px 7px rgba(0, 0, 0, 0.6), inset 0 -3px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Cristal: reflejo curvo arriba, filo de luz abajo y una veta que se desplaza con el cursor. */
+.furin-analog-gauge__glass {
+  position: absolute;
+  inset: 7.2%;
+  border-radius: 50%;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0) 70%, rgba(255, 255, 255, 0.07) 96%, rgba(255, 255, 255, 0.2) 100%),
+    radial-gradient(circle at 78% 104%, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 42%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.furin-analog-gauge__glare {
+  position: absolute;
+  left: 9%;
+  right: 9%;
+  top: 3%;
+  height: 46%;
+  border-radius: 50% 50% 46% 46% / 62% 62% 38% 38%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 55%, rgba(255, 255, 255, 0.015) 100%);
+  transform: translate(calc((var(--fag-x) - 0.5) * -16px), calc((var(--fag-y) - 0.5) * -10px));
+}
+.furin-analog-gauge__streak {
+  position: absolute;
+  top: -10%;
+  bottom: -10%;
+  width: 14%;
+  left: calc(8% + var(--fag-x) * 74%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  transform: skewX(-18deg);
+  filter: blur(2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .furin-analog-gauge { transition: none; }
+}

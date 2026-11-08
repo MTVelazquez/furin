@@ -1,0 +1,92 @@
+.furin-glint-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: var(--furin-glint-button-h);
+  padding: 0 32px 0 34px;
+  border: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  isolation: isolate;
+  color: #fff;
+  background:
+    radial-gradient(120% 140% at 20% -40%, rgb(255 255 255 / 0.16), transparent 55%),
+    linear-gradient(180deg, color-mix(in srgb, var(--furin-glint-button-color) 78%, #fff) 0%, var(--furin-glint-button-color) 48%, color-mix(in srgb, var(--furin-glint-button-color) 70%, #000) 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.18),
+    inset 0 -1px 0 rgb(0 0 0 / 0.5),
+    0 1px 2px rgb(0 0 0 / 0.5),
+    0 16px 28px -12px rgb(0 0 0 / 0.85);
+  font: 600 17px/1 Geist, -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  transform: scale(1);
+  transition: transform 0.5s cubic-bezier(0.3, 1.7, 0.5, 1);
+}
+.furin-glint-button:hover { transform: scale(1.03); }
+.furin-glint-button:active { transform: scale(0.96); transition-duration: 0.1s; }
+.furin-glint-button:focus-visible { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18), 0 0 0 4px rgb(255 255 255 / 0.5); }
+.furin-glint-button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* Las tres capas comparten la misma franja y la misma animación: el destello las enciende a la vez. */
+.furin-glint-button__fill,
+.furin-glint-button__edge,
+.furin-glint-button__label {
+  --furin-glint-button-band: linear-gradient(var(--furin-glint-button-angle),
+    transparent 43%,
+    color-mix(in srgb, var(--furin-glint-button-glint) 12%, transparent) 47%,
+    color-mix(in srgb, var(--furin-glint-button-glint) 90%, transparent) 50%,
+    color-mix(in srgb, var(--furin-glint-button-glint) 12%, transparent) 53%,
+    transparent 57%);
+}
+.furin-glint-button__fill {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.38;
+  mix-blend-mode: screen;
+  background: var(--furin-glint-button-band) 130% 0 / 260% 100% no-repeat;
+}
+/* Borde que se enciende: el mismo destello, recortado a un aro de 1.5px. */
+.furin-glint-button__edge {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  pointer-events: none;
+  background:
+    var(--furin-glint-button-band) 130% 0 / 260% 100% no-repeat,
+    linear-gradient(180deg, rgb(255 255 255 / 0.3), rgb(255 255 255 / 0.04) 55%, rgb(255 255 255 / 0.12));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.furin-glint-button__label {
+  position: relative;
+  color: transparent;
+  background: var(--furin-glint-button-band) 130% 0 / 260% 100% no-repeat, linear-gradient(#dfe2ea, #dfe2ea);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 1px 0 rgb(0 0 0 / 0.5));
+}
+.furin-glint-button__arrow { width: 18px; height: 18px; flex: none; color: #dfe2ea; transition: transform 0.4s cubic-bezier(0.3, 1.7, 0.5, 1); }
+.furin-glint-button:hover .furin-glint-button__arrow { transform: translateX(3px); }
+
+.furin-glint-button[data-glint="true"] .furin-glint-button__fill,
+.furin-glint-button[data-glint="true"] .furin-glint-button__edge,
+.furin-glint-button[data-glint="true"] .furin-glint-button__label {
+  animation: furin-glint-button-sweep var(--furin-glint-button-dur) cubic-bezier(0.35, 0.05, 0.3, 1) both;
+}
+.furin-glint-button[data-glint="true"] .furin-glint-button__fill { opacity: 0.6; }
+@keyframes furin-glint-button-sweep {
+  from { background-position: 130% 0, 0 0; }
+  to { background-position: -30% 0, 0 0; }
+}
+@media (prefers-reduced-motion: reduce) { .furin-glint-button { transition: none; } .furin-glint-button__arrow { transition: none; } }

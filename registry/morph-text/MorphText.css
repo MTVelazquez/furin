@@ -1,0 +1,33 @@
+.furin-morph-text {
+  position: relative;
+  display: block;
+  width: min(100%, 560px);
+  height: calc(var(--furin-mt-size, 96px) * 1.55);
+  font-size: var(--furin-mt-size, 96px);
+  font-weight: var(--furin-mt-weight, 800);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--furin-mt-color, #a9c8ff);
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.furin-morph-text__goo { position: absolute; inset: 0; }
+.furin-morph-text__palabra {
+  position: absolute; left: 0; right: 0; top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  will-change: filter, opacity;
+  /* Degradado de líquido: luz arriba, cuerpo al centro y sombra abajo; el relieve lo pone el filtro. */
+  background: linear-gradient(180deg, #fff 8%, var(--furin-mt-color, #a9c8ff) 42%, color-mix(in srgb, var(--furin-mt-color, #a9c8ff) 45%, #0b0c0f) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.furin-morph-text__palabra--b { opacity: 0; }
+.furin-morph-text__svg { position: absolute; width: 0; height: 0; pointer-events: none; }
+.furin-morph-text__sr {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}

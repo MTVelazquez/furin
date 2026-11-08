@@ -1,0 +1,102 @@
+.furin-glass-button {
+  --furin-glass-button-mx: 30%;
+  --furin-glass-button-my: -20px;
+  position: relative;
+  z-index: 1;
+  display: inline-grid;
+  place-items: center;
+  height: var(--furin-glass-button-h);
+  padding: 0 calc(var(--furin-glass-button-h) * 0.55);
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  font: 600 16px/1 Geist, system-ui, -apple-system, sans-serif;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  transform: scale(1);
+  /* Resorte con rebote: sube, se pasa un poco y se asienta. */
+  transition: transform 0.55s cubic-bezier(0.3, 1.7, 0.5, 1);
+}
+.furin-glass-button--sm { font-size: 14px; }
+.furin-glass-button--lg { font-size: 19px; }
+.furin-glass-button:hover { transform: scale(1.06); }
+.furin-glass-button:active { transform: scale(0.93, 0.9); transition-duration: 0.14s; transition-timing-function: ease-out; }
+.furin-glass-button:focus-visible { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.55); }
+.furin-glass-button:disabled { cursor: not-allowed; opacity: 0.45; }
+.furin-glass-button__glass {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.04) 50%, rgba(255, 255, 255, 0.1)),
+    var(--furin-glass-button-tint);
+  /* Sombra de contacto fuera del borde (un filter en el padre rompería el backdrop-filter). */
+  box-shadow:
+    0 14px 22px -10px rgba(5, 8, 30, 0.55),
+    0 3px 6px -1px rgba(5, 8, 30, 0.3),
+    inset 0 -8px 14px -6px rgba(255, 255, 255, 0.22),
+    inset 0 10px 14px -10px rgba(255, 255, 255, 0.4);
+}
+.furin-glass-button__sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(90px circle at var(--furin-glass-button-mx) var(--furin-glass-button-my), rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.furin-glass-button:hover .furin-glass-button__sheen { opacity: 1; }
+.furin-glass-button__onda {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at var(--furin-glass-button-mx) var(--furin-glass-button-my), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 55%);
+}
+.furin-glass-button__onda.is-on { animation: furin-glass-button-onda 0.75s ease-out; }
+@keyframes furin-glass-button-onda {
+  from { opacity: 0.9; clip-path: circle(0 at var(--furin-glass-button-mx) var(--furin-glass-button-my)); }
+  to { opacity: 0; clip-path: circle(260px at var(--furin-glass-button-mx) var(--furin-glass-button-my)); }
+}
+.furin-glass-button__rim {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.3px;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.12) 30%, rgba(255, 255, 255, 0.05) 62%, rgba(255, 255, 255, 0.6) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.furin-glass-button__label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  text-shadow: 0 1px 10px rgba(10, 14, 50, 0.4);
+  white-space: nowrap;
+}
+.furin-glass-button__arrow { transition: transform 0.45s cubic-bezier(0.3, 1.7, 0.5, 1); }
+.furin-glass-button:hover .furin-glass-button__arrow { transform: translateX(4px); }
+@media (prefers-reduced-motion: reduce) {
+  .furin-glass-button, .furin-glass-button__arrow { transition: none; }
+  .furin-glass-button__onda.is-on { animation: none; }
+}
+
+/* Escena de color: formas con borde nítido para que la refracción se note (solo se pinta con scene). */
+.furin-glass-button-scene { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: linear-gradient(160deg, #0d1236 0%, #1b0f3d 55%, #0b2335 100%); }
+.furin-glass-button-scene i { position: absolute; border-radius: 50%; animation: furin-glass-button-flota var(--t, 14s) ease-in-out infinite alternate; }
+.furin-glass-button-scene i:nth-child(1) { --t: 13s; --dx: 80px; --dy: 40px; width: 190px; height: 190px; left: 6%; top: 10%; background: radial-gradient(circle at 32% 28%, #ffd0ea 0, #ff5aa5 42%, #c21f78 100%); }
+.furin-glass-button-scene i:nth-child(2) { --t: 17s; --dx: -70px; --dy: -50px; width: 230px; height: 230px; right: 0%; top: 28%; background: radial-gradient(circle at 34% 30%, #bcd3ff, #4f7dff 45%, #2437c9); }
+.furin-glass-button-scene i:nth-child(3) { --t: 11s; --dx: 90px; --dy: -60px; width: 150px; height: 150px; left: 30%; bottom: -4%; background: radial-gradient(circle at 34% 30%, #d3fff3, #37e0b9 45%, #0a8e86); }
+.furin-glass-button-scene i:nth-child(4) { --t: 9s; --dx: -60px; --dy: 70px; width: 90px; height: 90px; right: 28%; top: 4%; background: radial-gradient(circle at 34% 30%, #fff2cc, #ffb347 50%, #e6700f); }
+.furin-glass-button-scene b { position: absolute; inset: -10% -14%; background: repeating-linear-gradient(105deg, transparent 0 44px, rgba(255, 255, 255, 0.22) 44px 47px); animation: furin-glass-button-lineas 12s ease-in-out infinite alternate; }
+@keyframes furin-glass-button-flota { to { transform: translate(var(--dx), var(--dy)) scale(1.1); } }
+@keyframes furin-glass-button-lineas { to { transform: translateX(-70px); } }
+@media (prefers-reduced-motion: reduce) { .furin-glass-button-scene i, .furin-glass-button-scene b { animation: none; } }

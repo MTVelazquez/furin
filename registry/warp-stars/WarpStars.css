@@ -1,0 +1,21 @@
+.furin-warp-stars {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--furin-warp-stars-bg, #05060a);
+  touch-action: pan-y;
+}
+.furin-warp-stars__lienzo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
+/* Viñeta de lente: oscurece las esquinas y deja respirar el centro, donde suele ir el titular. */
+.furin-warp-stars__vineta {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 85% 80% at 50% 50%, transparent 38%, rgba(0, 0, 0, 0.62) 100%);
+}
+.furin-warp-stars__contenido { position: relative; z-index: 2; max-width: 100%; pointer-events: none; }
+.furin-warp-stars__contenido > * { pointer-events: auto; }

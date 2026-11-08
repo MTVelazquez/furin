@@ -1,0 +1,43 @@
+.furin-ticket {
+  --tt-accent: #ff5a36; --tt-paper: #f5f0e5; --tt-s: 1;
+  --tt-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .22 0 0 0 .65 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  display: grid;
+  place-items: center;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.furin-ticket__stage { position: relative; width: var(--tt-w); height: var(--tt-h); transform: scale(var(--tt-s)) rotate(-2.5deg); }
+.furin-ticket__stage > div { position: absolute; inset: 0; }
+.furin-ticket__lower-wrap, .furin-ticket__main-wrap { filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.45)) drop-shadow(0 12px 16px rgba(0, 0, 0, 0.4)); }
+.furin-ticket__piece { position: absolute; inset: 0; }
+.furin-ticket__fibers { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.furin-ticket__fiber { fill: none; stroke: #fffdf6; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; opacity: 0.95; }
+/* Zona del talón que se agarra. */
+.furin-ticket__hit { left: calc(var(--tt-w) - 96px) !important; width: 96px; z-index: 5; touch-action: none; }
+
+/* Arte del boleto (se pinta tres veces, recortado por cada pedazo). */
+.furin-ticket__art { position: absolute; inset: 0; color: #1a130d; font-family: Geist, "Inter", system-ui, sans-serif; background: var(--tt-paper); overflow: hidden; }
+.furin-ticket__main-art { position: absolute; left: 0; top: 0; bottom: 0; width: 294px; padding: 15px 18px 14px 28px; box-sizing: border-box; display: flex; flex-direction: column; }
+.furin-ticket__bar { position: absolute; left: 0; top: 0; bottom: 0; width: 12px; background: var(--tt-accent); }
+.furin-ticket__bar::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.12) 0 2px, transparent 2px 8px); }
+.furin-ticket__top { display: flex; justify-content: space-between; font: 600 9px/1 "JetBrains Mono", ui-monospace, monospace; letter-spacing: 0.2em; color: rgba(26, 19, 13, 0.55); }
+.furin-ticket__title { margin: 12px 0 0; font-weight: 800; font-size: 34px; line-height: 0.95; letter-spacing: -0.035em; }
+.furin-ticket__sub { margin: 8px 0 0; font-size: 12.5px; font-weight: 600; }
+.furin-ticket__place { margin: 2px 0 0; font-size: 11px; color: rgba(26, 19, 13, 0.6); }
+.furin-ticket__fields { margin-top: auto; display: flex; gap: 0; border-top: 1.5px solid rgba(26, 19, 13, 0.85); padding-top: 7px; }
+.furin-ticket__fields div { flex: 1; display: grid; gap: 2px; }
+.furin-ticket__fields div + div { padding-left: 12px; border-left: 1px solid rgba(26, 19, 13, 0.18); }
+.furin-ticket__fields i { font: 600 8px/1 "JetBrains Mono", ui-monospace, monospace; letter-spacing: 0.18em; text-transform: uppercase; font-style: normal; color: rgba(26, 19, 13, 0.5); }
+.furin-ticket__fields b { font-size: 19px; font-weight: 750; letter-spacing: -0.02em; line-height: 1; }
+.furin-ticket__stub-art { position: absolute; right: 0; top: 0; bottom: 0; width: 96px; background: var(--tt-accent); color: #fff; display: grid; place-items: center; }
+.furin-ticket__stub-art::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(0, 0, 0, 0.14)); }
+.furin-ticket__vert { position: absolute; left: 12px; top: 50%; transform: translate(-50%, -50%) rotate(-90deg); white-space: nowrap; font: 700 9px/1 "JetBrains Mono", ui-monospace, monospace; letter-spacing: 0.24em; opacity: 0.92; }
+.furin-ticket__code { position: relative; width: 38px; height: 62px; margin-left: 12px; fill: #fff; opacity: 0.95; }
+.furin-ticket__light { position: absolute; inset: 0; background: linear-gradient(115deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 38%, rgba(0, 0, 0, 0.07) 100%); mix-blend-mode: soft-light; pointer-events: none; }
+.furin-ticket__grain { position: absolute; inset: 0; background: var(--tt-grain) 0 0 / 200px 200px; mix-blend-mode: multiply; opacity: 0.55; pointer-events: none; }
+.furin-ticket:focus-visible .furin-ticket__stage { outline: 2px solid rgba(255, 255, 255, 0.45); outline-offset: 10px; border-radius: 8px; }

@@ -1,0 +1,9 @@
+/* La envoltura se queda quieta (marca el punto de reposo); solo se mueve su interior. */
+.furin-iman {
+  display: inline-block;
+}
+
+.furin-iman__interior {
+  display: block;
+  will-change: transform;
+}

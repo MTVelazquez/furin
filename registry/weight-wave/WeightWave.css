@@ -1,0 +1,20 @@
+.furin-weight-wave {
+  display: inline-grid;
+  max-width: 100%;
+  font-family: var(--furin-ww-family), "Roboto Flex", "Inter", "SF Pro Display", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-size: calc(var(--furin-ww-size) * var(--furin-ww-fit, 1));
+  font-weight: var(--furin-ww-min);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--furin-ww-color);
+  text-align: center;
+  white-space: pre;
+  -webkit-font-smoothing: antialiased;
+}
+.furin-weight-wave__capa { grid-area: 1 / 1; display: block; }
+.furin-weight-wave__capa--fantasma { visibility: hidden; font-weight: var(--furin-ww-max); pointer-events: none; user-select: none; }
+.furin-weight-wave__linea { display: block; }
+.furin-weight-wave__letra { display: inline-block; font-weight: var(--furin-ww-min); will-change: font-weight; }
+.furin-weight-wave__esp { display: inline-block; width: 0.26em; }
+/* El texto real queda disponible para lectores de pantalla. */
+.furin-weight-wave__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

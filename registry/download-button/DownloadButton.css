@@ -1,0 +1,65 @@
+.furin-download-button {
+  --furin-dl-color: #f3f4f7;
+  --furin-dl-done: #6ee0a6;
+  --furin-dl-ease: cubic-bezier(0.34, 1.35, 0.55, 1);
+  position: relative;
+  width: min(240px, 90%);
+  height: 76px;
+  font-family: Geist, system-ui, -apple-system, sans-serif;
+  color: #0b0c0f;
+}
+.furin-download-button__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Info del archivo sobre la barra */
+.furin-download-button__info { position: absolute; left: 2px; right: 2px; top: 6px; display: flex; justify-content: space-between; align-items: baseline; opacity: 0; transform: translateY(8px); transition: opacity 0.3s, transform 0.5s var(--furin-dl-ease); pointer-events: none; }
+.is-bajando .furin-download-button__info { opacity: 1; transform: none; transition-delay: 0.15s; }
+.furin-download-button__archivo { font: 500 12.5px/1 Geist, system-ui, sans-serif; color: rgba(255, 255, 255, 0.78); }
+.furin-download-button__archivo i { font: 400 11px "JetBrains Mono", ui-monospace, monospace; font-style: normal; margin-left: 6px; color: rgba(255, 255, 255, 0.4); }
+.furin-download-button__pct { font: 500 12.5px/1 "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace; font-variant-numeric: tabular-nums; color: #fff; }
+
+/* Botón: una pastilla que, al descargar, se afina hasta ser una barra y, al terminar, vuelve a crecer. */
+.furin-download-button__boton {
+  position: absolute;
+  left: 0; right: 0; bottom: 6px;
+  height: 52px;
+  display: block;
+  padding: 0;
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--furin-dl-color);
+  color: #0b0c0f;
+  cursor: pointer;
+  font: 600 15px/1 Geist, system-ui, sans-serif;
+  letter-spacing: -0.01em;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 12px 26px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 0, 0, 0.1);
+  transition: height 0.55s var(--furin-dl-ease), background-color 0.4s ease, box-shadow 0.4s ease, transform 0.25s var(--furin-dl-ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.furin-download-button__boton:hover { transform: scale(1.015); }
+.furin-download-button__boton:active { transform: scale(0.97); }
+.furin-download-button__boton:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.9); outline-offset: 3px; }
+.is-bajando .furin-download-button__boton { height: 8px; bottom: 25px; background: rgba(255, 255, 255, 0.13); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06); cursor: pointer; }
+.is-bajando .furin-download-button__boton:hover { transform: none; }
+.is-listo .furin-download-button__boton { background: var(--furin-dl-done); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 12px 30px -10px color-mix(in srgb, var(--furin-dl-done) 55%, transparent), 0 0 0 1px rgba(0, 0, 0, 0.08); cursor: default; }
+
+.furin-download-button__relleno-wrap { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; opacity: 0; transition: opacity 0.25s; }
+.is-bajando .furin-download-button__relleno-wrap { opacity: 1; transition-delay: 0.2s; }
+.furin-download-button__relleno { position: absolute; inset: 0; transform: scaleX(0); transform-origin: left center; border-radius: inherit; background: linear-gradient(90deg, #cfd5ff, #fff); box-shadow: 0 0 14px rgba(255, 255, 255, 0.6); }
+
+.furin-download-button__contenido, .furin-download-button__listo { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; transition: opacity 0.25s ease, transform 0.5s var(--furin-dl-ease); }
+.furin-download-button__flecha { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.4s var(--furin-dl-ease); }
+.furin-download-button__boton:hover .furin-download-button__flecha { transform: translateY(2px); }
+.is-bajando .furin-download-button__contenido { opacity: 0; transform: scale(0.85); }
+.is-listo .furin-download-button__contenido { opacity: 0; transform: translateY(-14px); }
+
+.furin-download-button__listo { opacity: 0; transform: translateY(14px); }
+.is-listo .furin-download-button__listo { opacity: 1; transform: none; transition-delay: 0.12s; }
+.furin-download-button__listo svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; }
+.furin-download-button__listo path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.is-listo .furin-download-button__listo path { stroke-dashoffset: 0; transition: stroke-dashoffset 0.45s cubic-bezier(0.65, 0, 0.35, 1) 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .furin-download-button__boton, .furin-download-button__info, .furin-download-button__contenido, .furin-download-button__listo, .furin-download-button__flecha, .furin-download-button__listo path { transition: none !important; }
+}

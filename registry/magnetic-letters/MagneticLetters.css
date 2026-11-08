@@ -1,0 +1,18 @@
+.furin-magnetic-letters {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  font-family: "Geist", "Inter", "SF Pro Display", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-size: calc(var(--furin-ml-size) * var(--furin-ml-fit, 1));
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--furin-ml-color);
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+}
+.furin-magnetic-letters__vis { display: block; }
+.furin-magnetic-letters__linea { display: block; }
+.furin-magnetic-letters__palabra { display: inline-block; white-space: nowrap; }
+.furin-magnetic-letters__letra { display: inline-block; will-change: transform; transform-origin: 50% 58%; }
+.furin-magnetic-letters__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

@@ -1,0 +1,12 @@
+.furin-lava-lamp {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  overflow: hidden;
+  background: #0a0809;
+  touch-action: pan-y;
+}
+.furin-lava-lamp__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.furin-lava-lamp__contenido { position: relative; z-index: 1; width: 100%; height: 100%; display: grid; place-items: center; pointer-events: none; }
+.furin-lava-lamp__contenido > * { pointer-events: auto; }

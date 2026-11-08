@@ -1,0 +1,103 @@
+.furin-typing-indicator {
+  --furin-ti-scale: 1;
+  --furin-ti-bg: #2a2b31;
+  --furin-ti-fg: #f3f5f8;
+  --furin-ti-dot: #9a9ca6;
+  --furin-ti-ctx: linear-gradient(180deg, #4a8cff, #2c6bf2);
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+  width: min(340px, 92%);
+  font-family: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: calc(15px * var(--furin-ti-scale));
+  color: var(--furin-ti-fg);
+}
+.furin-typing-indicator.is-light { --furin-ti-bg: #e9e9ee; --furin-ti-fg: #15161a; --furin-ti-dot: #8b8d97; }
+.furin-typing-indicator.is-accent { --furin-ti-bg: linear-gradient(180deg, #4a8cff, #2c6bf2); --furin-ti-fg: #fff; --furin-ti-dot: rgba(255, 255, 255, 0.9); --furin-ti-ctx: #2a2b31; }
+
+.furin-typing-indicator__ctx {
+  justify-self: end;
+  max-width: 82%;
+  padding: 0.55em 0.95em;
+  border-radius: 1.2em 1.2em 0.35em 1.2em;
+  background: var(--furin-ti-ctx);
+  color: #fff;
+  line-height: 1.3;
+  box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.6);
+}
+.is-accent .furin-typing-indicator__ctx { color: #f3f5f8; }
+
+.furin-typing-indicator__slot { position: relative; min-height: 2.6em; }
+.furin-typing-indicator__bubble {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background: var(--furin-ti-bg);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 6px 18px -8px rgba(0, 0, 0, 0.6);
+  transform-origin: 0% 100%;
+  animation: furin-typing-indicator-pop 0.65s linear(0, 0.35 8%, 0.82 17%, 1.08 26%, 1.14 33%, 1.06 42%, 0.98 53%, 1.01 65%, 1 80%, 1) both;
+}
+.furin-typing-indicator__typing {
+  gap: 0.34em;
+  padding: 0.92em 1.05em;
+  border-radius: 1.4em;
+}
+/* Cola de globo: dos círculos que se achican hacia abajo a la izquierda. */
+.furin-typing-indicator__typing::before,
+.furin-typing-indicator__typing::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: var(--furin-ti-bg);
+}
+.furin-typing-indicator__typing::before { width: 0.62em; height: 0.62em; left: -0.18em; bottom: -0.1em; }
+.furin-typing-indicator__typing::after { width: 0.32em; height: 0.32em; left: -0.46em; bottom: -0.34em; }
+
+.furin-typing-indicator__dot {
+  display: block;
+  width: 0.56em;
+  height: 0.56em;
+  border-radius: 50%;
+  background: var(--furin-ti-dot);
+  animation: furin-typing-indicator-dot 1.4s linear infinite;
+  animation-delay: calc(var(--furin-ti-i) * 0.17s);
+}
+@keyframes furin-typing-indicator-dot {
+  0%, 62%, 100% { transform: translateY(0) scale(1, 1); opacity: 0.5; animation-timing-function: ease-in; }
+  8% { transform: translateY(0.05em) scale(1.12, 0.86); opacity: 0.55; animation-timing-function: ease-out; }
+  22% { transform: translateY(-0.52em) scale(0.9, 1.14); opacity: 1; animation-timing-function: ease-in; }
+  38% { transform: translateY(0.1em) scale(1.16, 0.84); opacity: 0.85; animation-timing-function: ease-out; }
+  50% { transform: translateY(-0.14em) scale(0.97, 1.04); opacity: 0.65; animation-timing-function: ease-in-out; }
+}
+.furin-typing-indicator[data-pausa="1"] .furin-typing-indicator__dot { animation-play-state: paused; }
+
+.furin-typing-indicator__reply {
+  max-width: 88%;
+  padding: 0.62em 1em;
+  border-radius: 1.25em 1.25em 1.25em 0.35em;
+  line-height: 1.3;
+}
+
+@keyframes furin-typing-indicator-pop {
+  from { opacity: 0; transform: scale(0.35); }
+  25% { opacity: 1; }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.furin-typing-indicator__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .furin-typing-indicator__bubble { animation: none; }
+  .furin-typing-indicator__dot { animation: none; opacity: 0.8; }
+  .furin-typing-indicator__dot:nth-child(2) { transform: translateY(-0.18em); opacity: 1; }
+}

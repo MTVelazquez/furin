@@ -1,0 +1,69 @@
+.furin-shimmer-sweep {
+  --fss-size: 56px;
+  --fss-angle: 100deg;
+  --fss-i: 1;
+  --fss-grain: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='300'%20height='300'%3E%3Cfilter%20id='g'%20x='0'%20y='0'%20width='100%25'%20height='100%25'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.004%200.75'%20numOctaves='3'%20seed='31'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='matrix'%20values='0.33%200.33%200.33%200%200%200.33%200.33%200.33%200%200%200.33%200.33%200.33%200%200%200%200%200%200%201'/%3E%3CfeComponentTransfer%3E%3CfeFuncR%20type='linear'%20slope='2.4'%20intercept='-0.7'/%3E%3CfeFuncG%20type='linear'%20slope='2.4'%20intercept='-0.7'/%3E%3CfeFuncB%20type='linear'%20slope='2.4'%20intercept='-0.7'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23g)'/%3E%3C/svg%3E");
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  font-size: var(--fss-size);
+  line-height: 1;
+  padding: 0.1em 0.12em 0.18em;
+  user-select: none;
+}
+.furin-shimmer-sweep__defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.furin-shimmer-sweep__line { position: relative; display: inline-block; }
+.furin-shimmer-sweep__back,
+.furin-shimmer-sweep__front {
+  display: inline-block;
+  font: 800 var(--fss-size) / 1.08 "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+/* Sombras y filos de luz: se asoman por debajo del relleno metálico. */
+.furin-shimmer-sweep__back {
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  text-shadow:
+    0 -1px 0 rgba(255, 255, 255, 0.45),
+    0 1px 0 rgba(0, 0, 0, 0.7),
+    0 3px 2px rgba(0, 0, 0, 0.45),
+    0 14px 22px rgba(0, 0, 0, 0.6);
+}
+
+.furin-shimmer-sweep__front {
+  position: relative;
+  color: transparent;
+  /* La franja de luz es un degradado ancho que se desplaza con background-position (así lo anima el barrido y lo repinta bien el recorte a texto). */
+  background-image:
+    linear-gradient(
+      var(--fss-angle),
+      transparent 36%,
+      rgba(255, 255, 255, calc(0.22 * var(--fss-i))) 43%,
+      rgba(255, 255, 255, calc(0.92 * var(--fss-i))) 48.5%,
+      rgba(255, 255, 255, calc(0.98 * var(--fss-i))) 51%,
+      rgba(255, 255, 255, calc(0.3 * var(--fss-i))) 55%,
+      transparent 61%,
+      rgba(0, 0, 0, calc(0.3 * var(--fss-i))) 66%,
+      transparent 74%
+    ),
+    var(--fss-grain),
+    var(--fss-metal);
+  background-size: 260% 100%, 300px 300px, 100% 100%;
+  background-repeat: no-repeat, repeat, no-repeat;
+  background-position: 55% 0, 0 0, 0 0;
+  background-blend-mode: normal, soft-light, normal;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.furin-shimmer-sweep--aluminum {
+  --fss-metal: linear-gradient(180deg, #cdd1d7 0%, #a2a9b3 30%, #6c737e 52%, #8e959f 72%, #b9bec6 100%);
+}
+.furin-shimmer-sweep--titanium {
+  --fss-metal: linear-gradient(180deg, #c4beb3 0%, #958f84 30%, #5f5a52 52%, #7f7a70 72%, #aaa498 100%);
+}
+.furin-shimmer-sweep--gold {
+  --fss-metal: linear-gradient(180deg, #f3d98a 0%, #d3a640 30%, #94651a 52%, #b98a30 72%, #e4be68 100%);
+}

@@ -1,0 +1,145 @@
+.furin-coverflow {
+  --furin-cf-size: 156px;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  width: min(520px, 100%);
+  font-family: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #f3f5f8;
+}
+.furin-coverflow__scene {
+  position: relative;
+  width: 100%;
+  height: calc(var(--furin-cf-size) * 1.78);
+  perspective: 900px;
+  perspective-origin: 50% 36%;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+.furin-coverflow__scene:active { cursor: grabbing; }
+.furin-coverflow__scene:focus-visible { box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3); border-radius: 16px; }
+
+.furin-coverflow__stage {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--furin-cf-size) * 0.1);
+  width: 0;
+  height: var(--furin-cf-size);
+  transform-style: preserve-3d;
+}
+.furin-coverflow__cover {
+  --furin-cf-dim: 0;
+  position: absolute;
+  left: calc(var(--furin-cf-size) / -2);
+  top: 0;
+  width: var(--furin-cf-size);
+  height: var(--furin-cf-size);
+  /* Plano: la portada y su reflejo son coplanares, no necesitan 3D propio. Con preserve-3d, cada vez que el opacity de la portada
+     cruzaba 1 (las de los extremos se desvanecen) el navegador cambiaba entre "3D" y "aplanado" y reconstruía las capas. */
+  transform-style: flat;
+  will-change: transform, opacity;
+}
+/* Cada capa de la portada se redondea a sí misma (border-radius: inherit) en vez de depender de un overflow:hidden del padre: un recorte
+   redondeado sobre un canvas compuesto dentro de un padre 3D obliga al navegador a rehacer la máscara en cada fotograma, y es de
+   donde salen los parpadeos de la imagen durante la transición. */
+.furin-coverflow__art {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  background: #14161b;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 14px 30px -10px rgba(0, 0, 0, 0.7);
+}
+.furin-coverflow__art canvas,
+.furin-coverflow__refl canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border-radius: inherit; }
+.furin-coverflow__shade { position: absolute; inset: 0; border-radius: inherit; background: #07080b; opacity: var(--furin-cf-dim); pointer-events: none; }
+.furin-coverflow__gloss {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.03) 34%, rgba(255, 255, 255, 0) 50%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 12%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+/* Reflejo: el mismo cuadro volteado y desvanecido hacia abajo, como sobre vidrio negro. */
+.furin-coverflow__refl {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 3px);
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  transform: scaleY(-1);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 0.34) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 0.34) 100%);
+  pointer-events: none;
+}
+
+.furin-coverflow__floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--furin-cf-size) * 1.12);
+  height: calc(var(--furin-cf-size) * 0.7);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+}
+.furin-coverflow__floor::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14), transparent);
+}
+
+.furin-coverflow__nav {
+  position: absolute;
+  top: calc(var(--furin-cf-size) * 0.1 + var(--furin-cf-size) / 2 - 18px);
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: #f3f5f8;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  backdrop-filter: blur(12px) saturate(1.4);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 8px 20px rgba(0, 0, 0, 0.45);
+  transition: transform 0.25s cubic-bezier(0.3, 1.5, 0.5, 1), background 0.2s ease, opacity 0.2s ease;
+}
+.furin-coverflow__nav.is-prev { left: 8px; }
+.furin-coverflow__nav.is-next { right: 8px; }
+.furin-coverflow__nav:hover:not(:disabled) { background: rgba(255, 255, 255, 0.16); transform: scale(1.1); }
+.furin-coverflow__nav:active:not(:disabled) { transform: scale(0.94); }
+.furin-coverflow__nav:disabled { opacity: 0.28; cursor: default; }
+.furin-coverflow__nav:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.6); outline-offset: 2px; }
+
+.furin-coverflow__caption { display: grid; justify-items: center; gap: 3px; min-height: 40px; text-align: center; }
+.furin-coverflow__title { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; }
+.furin-coverflow__sub { font-size: 12px; color: rgba(243, 245, 248, 0.5); letter-spacing: 0.04em; }
+
+.furin-coverflow__dots { display: flex; gap: 6px; padding-top: 4px; }
+.furin-coverflow__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  transition: width 0.4s cubic-bezier(0.3, 1.5, 0.5, 1), background 0.25s ease;
+}
+.furin-coverflow__dot.is-on { width: 18px; background: rgba(255, 255, 255, 0.85); }
+
+@media (prefers-reduced-motion: reduce) {
+  .furin-coverflow__dot, .furin-coverflow__nav { transition: none; }
+}

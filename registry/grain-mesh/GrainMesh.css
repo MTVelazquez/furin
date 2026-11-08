@@ -1,0 +1,18 @@
+.furin-grain-mesh {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  /* Mientras WebGL no llega (o no existe) queda un degradado de CSS con la misma paleta. */
+  background:
+    radial-gradient(70% 60% at 22% 18%, #d9b98f 0%, transparent 70%),
+    radial-gradient(60% 60% at 85% 85%, #b86f55 0%, transparent 70%),
+    radial-gradient(70% 70% at 80% 15%, #3b5b8f 0%, transparent 70%),
+    #0e1a33;
+  touch-action: pan-y;
+}
+.furin-grain-mesh__lienzo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
+.furin-grain-mesh__contenido { position: relative; z-index: 1; max-width: 100%; pointer-events: none; }
+.furin-grain-mesh__contenido > * { pointer-events: auto; }

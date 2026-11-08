@@ -1,0 +1,14 @@
+.furin-outline-fill {
+  position: relative;
+  display: block;
+  width: min(100%, 560px);
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  color: var(--furin-of-stroke, rgba(255, 255, 255, 0.9));
+}
+.furin-outline-fill__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.furin-outline-fill__sr {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: pre-line; border: 0;
+}

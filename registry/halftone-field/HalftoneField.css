@@ -1,0 +1,13 @@
+.furin-halftone-field {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--furin-halftone-field-bg, #0b0c0f);
+  touch-action: pan-y;
+}
+.furin-halftone-field__lienzo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
+.furin-halftone-field__contenido { position: relative; z-index: 1; max-width: 100%; pointer-events: none; }
+.furin-halftone-field__contenido > * { pointer-events: auto; }

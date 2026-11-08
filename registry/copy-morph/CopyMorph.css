@@ -1,0 +1,58 @@
+.furin-copy-morph {
+  --furin-copy-ok: #6ee0a6;
+  display: inline-block;
+  max-width: 94%;
+  font-family: Geist, system-ui, -apple-system, sans-serif;
+  color: #f2f3f5;
+}
+.furin-copy-morph__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Campo: el comando en mono con el botón pegado a la derecha, como una terminal de vidrio. */
+.furin-copy-morph__campo { display: flex; align-items: center; gap: 6px; min-width: min(380px, 100%); padding: 6px 6px 6px 16px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.1); background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 18px 36px -22px rgba(0, 0, 0, 0.8); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.furin-copy-morph__texto { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none; font: 400 14px/1.2 "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace; color: rgba(255, 255, 255, 0.88); user-select: all; }
+.furin-copy-morph__texto::-webkit-scrollbar { display: none; }
+.furin-copy-morph__prompt { margin-right: 10px; color: rgba(255, 255, 255, 0.32); user-select: none; }
+
+.furin-copy-morph__boton {
+  --c: rgba(255, 255, 255, 0.82);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px 0 10px;
+  height: 40px;
+  appearance: none;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--c);
+  font: 500 13.5px/1 Geist, system-ui, sans-serif;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.25s cubic-bezier(0.34, 1.6, 0.64, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+.furin-copy-morph__boton:hover { background: rgba(255, 255, 255, 0.1); --c: #fff; }
+.furin-copy-morph__boton:active { transform: scale(0.96); }
+.furin-copy-morph__boton:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.85); outline-offset: 2px; }
+.furin-copy-morph__boton.is-copiado { --c: var(--furin-copy-ok); background: color-mix(in srgb, var(--furin-copy-ok) 12%, transparent); border-color: color-mix(in srgb, var(--furin-copy-ok) 38%, transparent); }
+.furin-copy-morph__boton.is-error { --c: #ff8a93; background: rgba(255, 122, 133, 0.1); border-color: rgba(255, 122, 133, 0.35); animation: furin-copy-morph-sacude 0.4s ease; }
+.furin-copy-morph--button .furin-copy-morph__boton { height: 46px; padding: 0 18px 0 14px; border-radius: 12px; font-size: 14.5px; }
+.furin-copy-morph--icon .furin-copy-morph__boton { width: 42px; height: 42px; padding: 0; justify-content: center; border-radius: 12px; }
+
+.furin-copy-morph__icono { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.furin-copy-morph__atras { transform-box: fill-box; transform-origin: center; transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1); }
+.is-copiado .furin-copy-morph__atras { opacity: 0; transform: translate(2px, 2px) scale(0.7); }
+.furin-copy-morph__frente { filter: drop-shadow(0 0 0 transparent); transition: filter 0.4s; }
+.is-copiado .furin-copy-morph__frente { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--furin-copy-ok) 70%, transparent)); }
+
+/* Etiqueta: los tres textos comparten celda, así el botón no cambia de ancho; el activo sube desde abajo. */
+.furin-copy-morph__etq { display: inline-grid; overflow: hidden; height: 1.3em; align-items: center; justify-items: start; }
+.furin-copy-morph__etq > span { grid-area: 1 / 1; white-space: nowrap; opacity: 0; transform: translateY(110%); transition: transform 0.45s cubic-bezier(0.22, 1.1, 0.36, 1), opacity 0.25s; }
+.furin-copy-morph__etq > .is-on { opacity: 1; transform: none; }
+.furin-copy-morph__boton:not(.is-idle) .furin-copy-morph__etq > :not(.is-on) { transform: translateY(-110%); }
+
+@keyframes furin-copy-morph-sacude { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 60% { transform: translateX(4px); } }
+@media (prefers-reduced-motion: reduce) {
+  .furin-copy-morph__boton, .furin-copy-morph__atras, .furin-copy-morph__etq > span, .furin-copy-morph__frente { transition: none !important; animation: none !important; }
+}

@@ -1,0 +1,20 @@
+.furin-galaxy {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--furin-galaxy-bg, #04050a);
+  touch-action: pan-y;
+}
+.furin-galaxy__lienzo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
+.furin-galaxy__vineta {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 92% 90% at 50% 50%, transparent 45%, rgba(0, 0, 0, 0.55) 115%);
+}
+.furin-galaxy__contenido { position: relative; z-index: 2; max-width: 100%; pointer-events: none; }
+.furin-galaxy__contenido > * { pointer-events: auto; }

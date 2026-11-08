@@ -1,0 +1,174 @@
+@property --fmk-x { syntax: "<number>"; inherits: true; initial-value: 0.34; }
+@property --fmk-y { syntax: "<number>"; inherits: true; initial-value: 0.24; }
+
+.furin-metal-knob {
+  --fmk-d: 140px;
+  --fmk-accent: #ffb13b;
+  --fmk-grain: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='240'%20height='240'%3E%3Cfilter%20id='g'%20x='0'%20y='0'%20width='100%25'%20height='100%25'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.012%200.9'%20numOctaves='2'%20seed='5'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='matrix'%20values='0.33%200.33%200.33%200%200%200.33%200.33%200.33%200%200%200.33%200.33%200.33%200%200%200%200%200%200%201'/%3E%3CfeComponentTransfer%3E%3CfeFuncR%20type='linear'%20slope='2.2'%20intercept='-0.6'/%3E%3CfeFuncG%20type='linear'%20slope='2.2'%20intercept='-0.6'/%3E%3CfeFuncB%20type='linear'%20slope='2.2'%20intercept='-0.6'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23g)'/%3E%3C/svg%3E");
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+}
+.furin-metal-knob--off { opacity: 0.55; filter: grayscale(0.6); }
+
+.furin-metal-knob__dial {
+  position: relative;
+  width: var(--fmk-w);
+  height: var(--fmk-w);
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+/* Escala: marcas grabadas, las encendidas brillan con el color de acento. */
+.furin-metal-knob__scale { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.furin-metal-knob__tick { stroke: #3a3f47; stroke-width: 1.4; stroke-linecap: round; transition: stroke 0.18s ease; }
+.furin-metal-knob__tick.is-major { stroke-width: 2.2; stroke: #4a5059; }
+.furin-metal-knob__tick.is-on { stroke: var(--fmk-accent); filter: drop-shadow(0 0 3px color-mix(in srgb, var(--fmk-accent) 75%, transparent)); }
+.furin-metal-knob__num { font: 600 10px / 1 ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace; fill: #6b727c; letter-spacing: 0.04em; }
+
+/* Alojamiento: un pozo oscuro con bisel donde se asienta la perilla. */
+.furin-metal-knob__well {
+  position: absolute;
+  width: calc(var(--fmk-d) + 26px);
+  height: calc(var(--fmk-d) + 26px);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 38%, #101216 0%, #07080a 72%);
+  box-shadow:
+    0 0 0 2px #2a2e34,
+    0 0 0 3px #0a0b0d,
+    0 1px 0 3px rgba(255, 255, 255, 0.1),
+    inset 0 4px 10px rgba(0, 0, 0, 0.95);
+}
+/* Aro de aluminio oscuro alrededor del pozo, con reflejos de estudio. */
+.furin-metal-knob__well::before {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  z-index: -1;
+  border-radius: 50%;
+  background: conic-gradient(from 30deg, #3b4047, #7a808a 12%, #2a2d33 25%, #646a74 37%, #3b4047 50%, #7a808a 62%, #2a2d33 75%, #646a74 87%, #3b4047);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.8), 0 6px 12px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+}
+
+.furin-metal-knob__knob {
+  position: relative;
+  width: var(--fmk-d);
+  height: var(--fmk-d);
+  border-radius: 50%;
+  cursor: grab;
+  touch-action: none;
+  isolation: isolate;
+  outline: none;
+  box-shadow:
+    0 2px 2px rgba(0, 0, 0, 0.7),
+    0 10px 14px -2px rgba(0, 0, 0, 0.65),
+    0 24px 30px -8px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s cubic-bezier(0.3, 1.5, 0.5, 1), box-shadow 0.25s ease;
+}
+.furin-metal-knob__knob.is-dragging { cursor: grabbing; transform: scale(0.985); box-shadow: 0 1px 1px rgba(0, 0, 0, 0.7), 0 6px 10px -2px rgba(0, 0, 0, 0.65), 0 14px 20px -8px rgba(0, 0, 0, 0.8); }
+.furin-metal-knob__knob:focus-visible { outline: 2px solid rgba(150, 185, 255, 0.95); outline-offset: 10px; }
+.furin-metal-knob--off .furin-metal-knob__knob { cursor: not-allowed; }
+
+/* Parte que gira: aro moleteado y tapa con su marca. El snap al valor con paso rebota como muelle. */
+.furin-metal-knob__turn {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  transition: transform 0.38s cubic-bezier(0.3, 1.45, 0.5, 1);
+  will-change: transform;
+}
+.furin-metal-knob__knob.is-dragging .furin-metal-knob__turn { transition: none; }
+
+/* Moleteado: una onda triangular de 3° vista desde arriba como dientes finos. */
+.furin-metal-knob__grip {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(from 0deg, #3c4048 0deg, #cfd4db 1.5deg, #3c4048 3deg);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.55), inset 0 0 8px rgba(0, 0, 0, 0.55);
+}
+
+.furin-metal-knob__cap {
+  position: absolute;
+  inset: calc(var(--fmk-d) * 0.11);
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.07) 0 0.6px, rgba(0, 0, 0, 0.08) 0.6px 1.5px),
+    radial-gradient(circle at 50% 50%, #c4cad2 0%, #a2a9b3 100%);
+  box-shadow:
+    0 0 0 1.5px rgba(0, 0, 0, 0.75),
+    0 0 0 3px rgba(255, 255, 255, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7),
+    inset 0 0 0 3.5px rgba(0, 0, 0, 0.16),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.25);
+}
+
+/* Marca: una ranura rebajada con filo de luz. */
+.furin-metal-knob__mark {
+  position: absolute;
+  left: 50%;
+  top: 7%;
+  width: calc(var(--fmk-d) * 0.034);
+  height: 25%;
+  min-width: 4px;
+  transform: translateX(-50%);
+  border-radius: 99px;
+  background: linear-gradient(180deg, #0c0d10, #2a2d33);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.85), inset 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+/* Luz de estudio fija: no gira con la perilla, así que los reflejos se quedan en su sitio. */
+.furin-metal-knob__light {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+.furin-metal-knob__light--ring {
+  inset: 0;
+  background: conic-gradient(from 0deg, #fff 0%, #000 12%, #bbb 22%, #000 36%, #fff 50%, #000 62%, #bbb 72%, #000 86%, #fff 100%);
+  opacity: 0.8;
+}
+.furin-metal-knob__light--cap {
+  inset: calc(var(--fmk-d) * 0.11);
+  background:
+    radial-gradient(circle at 34% 26%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 52%),
+    conic-gradient(from 20deg, #e8e8e8 0%, #6a6a6a 14%, #f4f4f4 26%, #7c7c7c 40%, #dedede 52%, #626262 66%, #f6f6f6 78%, #787878 90%, #e8e8e8 100%);
+  opacity: 0.55;
+}
+/* Punto caliente que sigue al cursor. */
+.furin-metal-knob__spec {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle at calc(var(--fmk-x) * 100%) calc(var(--fmk-y) * 100%), rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.2) 22%, rgba(255, 255, 255, 0) 46%);
+  mix-blend-mode: normal;
+  transition: --fmk-x 0.4s cubic-bezier(0.2, 0.75, 0.25, 1), --fmk-y 0.4s cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+.furin-metal-knob__knob { transition: --fmk-x 0.4s cubic-bezier(0.2, 0.75, 0.25, 1), --fmk-y 0.4s cubic-bezier(0.2, 0.75, 0.25, 1), transform 0.25s cubic-bezier(0.3, 1.5, 0.5, 1), box-shadow 0.25s ease; }
+
+/* Lectura. */
+.furin-metal-knob__readout { display: grid; justify-items: center; gap: 6px; margin-top: -30px; }
+.furin-metal-knob__label {
+  font: 600 10px / 1 ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  text-transform: uppercase;
+  color: #7b828c;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.7);
+}
+.furin-metal-knob__value {
+  font: 600 20px / 1 ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  color: #e9ecf0;
+  text-shadow: 0 0 12px color-mix(in srgb, var(--fmk-accent) 40%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .furin-metal-knob__turn, .furin-metal-knob__knob, .furin-metal-knob__spec, .furin-metal-knob__tick { transition: none; }
+}

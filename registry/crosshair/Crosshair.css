@@ -1,0 +1,107 @@
+.furin-crosshair {
+  --furin-crosshair-color: #7dd3fc;
+  --furin-crosshair-gap: 18px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  overflow: hidden;
+  touch-action: pan-y;
+  font-family: Geist, system-ui, -apple-system, sans-serif;
+  color: rgba(255, 255, 255, 0.5);
+  user-select: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .furin-crosshair--sin-cursor, .furin-crosshair--sin-cursor * { cursor: none; }
+}
+.furin-crosshair__contenido { position: relative; width: 100%; height: 100%; display: grid; place-items: center; }
+.furin-crosshair__pista {
+  font: 500 12px/1 "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.34);
+}
+
+.furin-crosshair__capa {
+  --furin-crosshair-x: 50%;
+  --furin-crosshair-y: 50%;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  color: var(--furin-crosshair-color);
+  transition: opacity 0.22s ease;
+}
+.furin-crosshair__capa.is-on { opacity: 1; }
+
+/* Líneas de borde a borde: se desvanecen hacia los extremos y se abren alrededor del cursor. */
+.furin-crosshair__linea { position: absolute; display: block; }
+.furin-crosshair__linea--h {
+  left: 0; right: 0; top: 0; height: 1px;
+  transform: translateY(var(--furin-crosshair-y));
+  background: linear-gradient(90deg, transparent, currentColor 14%, currentColor 86%, transparent);
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(var(--furin-crosshair-x) - var(--furin-crosshair-gap)), transparent calc(var(--furin-crosshair-x) - var(--furin-crosshair-gap)), transparent calc(var(--furin-crosshair-x) + var(--furin-crosshair-gap)), #000 calc(var(--furin-crosshair-x) + var(--furin-crosshair-gap)));
+  mask-image: linear-gradient(90deg, #000 calc(var(--furin-crosshair-x) - var(--furin-crosshair-gap)), transparent calc(var(--furin-crosshair-x) - var(--furin-crosshair-gap)), transparent calc(var(--furin-crosshair-x) + var(--furin-crosshair-gap)), #000 calc(var(--furin-crosshair-x) + var(--furin-crosshair-gap)));
+}
+.furin-crosshair__linea--v {
+  top: 0; bottom: 0; left: 0; width: 1px;
+  transform: translateX(var(--furin-crosshair-x));
+  background: linear-gradient(180deg, transparent, currentColor 14%, currentColor 86%, transparent);
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(180deg, #000 calc(var(--furin-crosshair-y) - var(--furin-crosshair-gap)), transparent calc(var(--furin-crosshair-y) - var(--furin-crosshair-gap)), transparent calc(var(--furin-crosshair-y) + var(--furin-crosshair-gap)), #000 calc(var(--furin-crosshair-y) + var(--furin-crosshair-gap)));
+  mask-image: linear-gradient(180deg, #000 calc(var(--furin-crosshair-y) - var(--furin-crosshair-gap)), transparent calc(var(--furin-crosshair-y) - var(--furin-crosshair-gap)), transparent calc(var(--furin-crosshair-y) + var(--furin-crosshair-gap)), #000 calc(var(--furin-crosshair-y) + var(--furin-crosshair-gap)));
+}
+
+/* Mira central: cuatro esquinas y un punto; se cierra un poco al pulsar. */
+.furin-crosshair__mira {
+  position: absolute;
+  left: 0; top: 0;
+  width: 32px; height: 32px;
+  margin: -16px 0 0 -16px;
+  transform: translate(var(--furin-crosshair-x), var(--furin-crosshair-y));
+  display: block;
+}
+.furin-crosshair__mira svg { display: block; transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1); filter: drop-shadow(0 0 6px color-mix(in srgb, currentColor 60%, transparent)); }
+.furin-crosshair__capa.is-press .furin-crosshair__mira svg { transform: scale(0.62); }
+
+/* Reglas con marcas cada 8 px y una más larga cada 40 px. */
+.furin-crosshair__regla { position: absolute; display: block; opacity: 0.4; }
+.furin-crosshair__regla--x {
+  left: 0; right: 0; top: 0; height: 9px;
+  background:
+    repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 40px) 0 0 / 100% 9px no-repeat,
+    repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 8px) 0 0 / 100% 4px no-repeat;
+}
+.furin-crosshair__regla--y {
+  top: 0; bottom: 0; left: 0; width: 9px;
+  background:
+    repeating-linear-gradient(180deg, currentColor 0 1px, transparent 1px 40px) 0 0 / 9px 100% no-repeat,
+    repeating-linear-gradient(180deg, currentColor 0 1px, transparent 1px 8px) 0 0 / 4px 100% no-repeat;
+}
+.furin-crosshair__marca { position: absolute; display: block; background: currentColor; box-shadow: 0 0 8px currentColor; }
+.furin-crosshair__marca--x { top: 0; left: 0; width: 1px; height: 14px; transform: translateX(var(--furin-crosshair-x)); }
+.furin-crosshair__marca--y { top: 0; left: 0; height: 1px; width: 14px; transform: translateY(var(--furin-crosshair-y)); }
+
+/* Etiqueta de coordenadas: vidrio oscuro, mono, cifras tabulares. */
+.furin-crosshair__etq {
+  position: absolute;
+  left: 0; top: 0;
+  display: flex;
+  gap: 12px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--furin-crosshair-color) 38%, transparent);
+  background: rgba(8, 11, 16, 0.72);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.7);
+  font: 500 11.5px/1 "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: #e9f6ff;
+  white-space: nowrap;
+}
+.furin-crosshair__etq > span { display: inline-flex; gap: 6px; }
+.furin-crosshair__etq b { font-weight: 500; color: var(--furin-crosshair-color); opacity: 0.85; }

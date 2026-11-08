@@ -1,0 +1,20 @@
+.furin-topo-lines {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--furin-topo-lines-bg, #0a0c0e);
+  touch-action: pan-y;
+}
+.furin-topo-lines__lienzo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
+.furin-topo-lines__vineta {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 90% 85% at 50% 50%, transparent 35%, var(--furin-topo-lines-bg, #0a0c0e) 112%);
+}
+.furin-topo-lines__contenido { position: relative; z-index: 2; max-width: 100%; pointer-events: none; }
+.furin-topo-lines__contenido > * { pointer-events: auto; }

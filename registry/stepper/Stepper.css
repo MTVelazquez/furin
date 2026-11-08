@@ -1,0 +1,102 @@
+.furin-stepper {
+  --furin-stepper-color: #8ea2ff;
+  --furin-stepper-nodo: 32px;
+  --furin-stepper-ease: cubic-bezier(0.65, 0, 0.35, 1);
+  display: grid;
+  gap: 26px;
+  width: min(440px, 94%);
+  font-family: Geist, system-ui, -apple-system, sans-serif;
+  color: #f2f3f5;
+}
+.furin-stepper__lista { margin: 0; padding: 0; list-style: none; display: flex; }
+.furin-stepper__paso { position: relative; flex: 1 1 0; display: grid; align-content: start; gap: 12px; min-width: 0; }
+.furin-stepper__paso.is-ultimo { flex: 0 0 auto; }
+.furin-stepper__fila { display: flex; align-items: center; }
+.furin-stepper__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Nodo: círculo con número (pendiente), anillo vivo (actual) o relleno con palomita (completo). */
+.furin-stepper__nodo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--furin-stepper-nodo);
+  height: var(--furin-stepper-nodo);
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.45);
+  appearance: none;
+  font: inherit;
+  cursor: default;
+  transition: background-color 0.4s var(--furin-stepper-ease), border-color 0.4s var(--furin-stepper-ease), color 0.3s, transform 0.5s cubic-bezier(0.34, 1.7, 0.64, 1), box-shadow 0.5s;
+}
+button.furin-stepper__nodo { cursor: pointer; }
+button.furin-stepper__nodo:hover { transform: scale(1.08); }
+button.furin-stepper__nodo:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.85); outline-offset: 3px; }
+.furin-stepper__num { font: 500 11.5px/1 "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 0.02em; transition: opacity 0.2s, transform 0.3s; }
+.furin-stepper__check { position: absolute; inset: 0; margin: auto; width: 16px; height: 16px; color: #0b0c0f; }
+.furin-stepper__check path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 0.35s var(--furin-stepper-ease) 0s; }
+
+.is-current .furin-stepper__nodo {
+  border-color: var(--furin-stepper-color);
+  color: #fff;
+  background: color-mix(in srgb, var(--furin-stepper-color) 14%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--furin-stepper-color) 16%, transparent), 0 0 22px -4px color-mix(in srgb, var(--furin-stepper-color) 60%, transparent);
+}
+.is-current .furin-stepper__nodo::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1px solid var(--furin-stepper-color);
+  animation: furin-stepper-pulso 2.2s ease-out infinite;
+}
+.is-done .furin-stepper__nodo { border-color: transparent; background: var(--furin-stepper-color); }
+.is-done .furin-stepper__num { opacity: 0; transform: scale(0.5); }
+.is-done .furin-stepper__check path { stroke-dashoffset: 0; transition-delay: 0.12s; }
+.is-todo .furin-stepper__check { opacity: 0; }
+.is-current .furin-stepper__check { opacity: 0; }
+
+/* Línea de progreso: se llena de un nodo al siguiente; el nodo nuevo se enciende cuando el trazo llega. */
+.furin-stepper__linea { position: relative; flex: 1; height: 2px; margin: 0 10px; border-radius: 2px; background: rgba(255, 255, 255, 0.1); overflow: hidden; }
+.furin-stepper__relleno { position: absolute; inset: 0; transform: scaleX(0); transform-origin: left center; background: linear-gradient(90deg, var(--furin-stepper-color), color-mix(in srgb, var(--furin-stepper-color) 70%, #fff)); transition: transform 0.55s var(--furin-stepper-ease); border-radius: inherit; }
+.is-done .furin-stepper__relleno { transform: scaleX(1); }
+/* Al avanzar, el nodo nuevo espera a que llegue la línea; al retroceder, el nodo se apaga primero. */
+.furin-stepper--adelante .is-current .furin-stepper__nodo { transition-delay: 0.42s; }
+.furin-stepper--adelante .is-current .furin-stepper__nodo::after { animation-delay: 0.42s; }
+.furin-stepper--atras .is-done .furin-stepper__relleno { transition-delay: 0s; }
+.furin-stepper--atras .furin-stepper__paso:not(.is-done) .furin-stepper__relleno { transition-delay: 0.1s; }
+
+.furin-stepper__texto { display: grid; gap: 3px; padding-right: 8px; }
+.furin-stepper__titulo { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; color: rgba(255, 255, 255, 0.5); transition: color 0.35s; }
+.furin-stepper__desc { font-size: 12.5px; color: rgba(255, 255, 255, 0.34); transition: color 0.35s; }
+.is-current .furin-stepper__titulo, .is-done .furin-stepper__titulo { color: #fff; }
+.is-current .furin-stepper__desc, .is-done .furin-stepper__desc { color: rgba(255, 255, 255, 0.55); }
+
+/* Vertical */
+.furin-stepper--vertical .furin-stepper__lista { flex-direction: column; }
+.furin-stepper--vertical .furin-stepper__paso { flex: none; grid-template-columns: var(--furin-stepper-nodo) 1fr; column-gap: 16px; gap: 0 16px; padding-bottom: 26px; }
+.furin-stepper--vertical .furin-stepper__paso.is-ultimo { padding-bottom: 0; }
+.furin-stepper--vertical .furin-stepper__fila { flex-direction: column; align-self: stretch; }
+.furin-stepper--vertical .furin-stepper__linea { width: 2px; height: auto; flex: 1; margin: 6px 0 -20px; }
+.furin-stepper--vertical .furin-stepper__relleno { transform: scaleY(0); transform-origin: center top; background: linear-gradient(180deg, var(--furin-stepper-color), color-mix(in srgb, var(--furin-stepper-color) 70%, #fff)); }
+.furin-stepper--vertical .is-done .furin-stepper__relleno { transform: scaleY(1); }
+.furin-stepper--vertical .furin-stepper__texto { padding-top: 6px; align-content: start; }
+
+/* Botones */
+.furin-stepper__controles { display: flex; gap: 10px; justify-content: flex-end; }
+.furin-stepper__btn { appearance: none; padding: 10px 16px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.14); background: rgba(255, 255, 255, 0.05); font: 500 13.5px/1 Geist, system-ui, sans-serif; color: #e8eaee; cursor: pointer; transition: background-color 0.2s, opacity 0.2s, transform 0.2s; }
+.furin-stepper__btn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.09); }
+.furin-stepper__btn:active:not(:disabled) { transform: scale(0.97); }
+.furin-stepper__btn:disabled { opacity: 0.35; cursor: default; }
+.furin-stepper__btn:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.85); outline-offset: 2px; }
+.furin-stepper__btn--primario { background: #f3f4f7; color: #0b0c0f; border-color: transparent; }
+.furin-stepper__btn--primario:hover:not(:disabled) { background: #fff; }
+
+@keyframes furin-stepper-pulso { 0% { transform: scale(1); opacity: 0.7; } 80%, 100% { transform: scale(1.7); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .furin-stepper__nodo, .furin-stepper__relleno, .furin-stepper__check path, .furin-stepper__num { transition: none !important; }
+  .is-current .furin-stepper__nodo::after { animation: none; }
+}

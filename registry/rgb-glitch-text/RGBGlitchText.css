@@ -1,0 +1,29 @@
+.furin-rgb-glitch {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  font-family: "Geist", "Inter", "SF Pro Display", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-size: calc(var(--furin-rgb-size) * var(--furin-rgb-fit, 1));
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  color: var(--furin-rgb-color);
+  text-align: center;
+  white-space: pre;
+  isolation: isolate;
+  cursor: default;
+  -webkit-font-smoothing: antialiased;
+}
+.furin-rgb-glitch__capa { display: block; }
+/* La capa base es la única en el flujo; el resto se apila encima. */
+.furin-rgb-glitch__capa:not(.furin-rgb-glitch__base) { position: absolute; inset: 0; pointer-events: none; user-select: none; }
+/* Los canales se suman con "screen": en reposo valen lo mismo que el texto base y se ocultan. */
+.furin-rgb-glitch__canal { mix-blend-mode: screen; opacity: 0; }
+.furin-rgb-glitch__r { color: var(--furin-rgb-r); }
+.furin-rgb-glitch__g { color: var(--furin-rgb-g); }
+.furin-rgb-glitch__b { color: var(--furin-rgb-b); }
+.furin-rgb-glitch[data-glitch="1"] .furin-rgb-glitch__canal { opacity: 1; }
+/* Con los canales activos, la base solo aporta el cuerpo que quede entre ellos. */
+.furin-rgb-glitch[data-glitch="1"] .furin-rgb-glitch__base { color: transparent; }
+.furin-rgb-glitch__corte { clip-path: inset(100% 0 0 0); text-shadow: -0.045em 0 rgba(255, 30, 70, 0.9), 0.045em 0 rgba(30, 220, 255, 0.9); }
+.furin-rgb-glitch__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

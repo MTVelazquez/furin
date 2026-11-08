@@ -1,0 +1,49 @@
+.furin-aurora {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--furin-aurora-bg, #0b0b0f);
+  color: #fff;
+  isolation: isolate;
+  /* Es un fondo: no estorba al resto de la página. */
+  pointer-events: none;
+}
+
+/* Contenedor del canvas WebGL: lo llena por completo. */
+.furin-aurora__host,
+.furin-aurora__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Fondo estático para cuando no hay WebGL: los mismos colores, sin movimiento. */
+.furin-aurora__fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 75% 34% at 22% 66%, color-mix(in srgb, var(--furin-aurora-c1) 55%, transparent), transparent 72%),
+    radial-gradient(ellipse 70% 32% at 58% 50%, color-mix(in srgb, var(--furin-aurora-c2) 50%, transparent), transparent 72%),
+    radial-gradient(ellipse 60% 28% at 84% 36%, color-mix(in srgb, var(--furin-aurora-c3) 50%, transparent), transparent 72%),
+    var(--furin-aurora-bg, #0b0b0f);
+}
+
+/* El contenido va encima, centrado. */
+.furin-aurora__content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Lo que pongas encima sí recibe clics y toques. */
+.furin-aurora__content > * {
+  pointer-events: auto;
+}

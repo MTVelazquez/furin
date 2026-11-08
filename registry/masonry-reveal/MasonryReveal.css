@@ -1,0 +1,85 @@
+.furin-masonry-reveal {
+  --furin-mr-gap: 10px;
+  --furin-mr-radius: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--furin-mr-gap);
+  width: min(460px, 94%);
+  font-family: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #f3f5f8;
+}
+.furin-masonry-reveal__col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: var(--furin-mr-gap); }
+
+.furin-masonry-reveal__tile {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--furin-mr-radius);
+  background: #14161b;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 14px 30px -14px rgba(0, 0, 0, 0.8);
+  isolation: isolate;
+  /* Estado oculto: abajo, un poco más chica y desenfocada. */
+  opacity: 0;
+  transform: translateY(30px) scale(0.9);
+  filter: blur(10px);
+  transition: opacity 0.35s ease, transform 0.45s ease, filter 0.35s ease, box-shadow 0.3s ease;
+}
+.furin-masonry-reveal.is-in .furin-masonry-reveal__tile {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition:
+    opacity 0.55s ease var(--furin-mr-d),
+    transform 0.95s cubic-bezier(0.2, 0.95, 0.25, 1.08) var(--furin-mr-d),
+    filter 0.7s ease var(--furin-mr-d),
+    box-shadow 0.3s ease;
+}
+.furin-masonry-reveal__art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+/* Destello que cruza la pieza justo al aparecer. */
+.furin-masonry-reveal__shine {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 38%, rgba(255, 255, 255, 0.34) 50%, transparent 62%);
+  transform: translateX(-120%);
+  mix-blend-mode: soft-light;
+}
+.furin-masonry-reveal.is-in .furin-masonry-reveal__shine {
+  animation: furin-masonry-reveal-shine 1.1s cubic-bezier(0.3, 0.6, 0.3, 1) both;
+  animation-delay: calc(var(--furin-mr-d) + 0.35s);
+}
+@keyframes furin-masonry-reveal-shine { from { transform: translateX(-120%); } to { transform: translateX(120%); } }
+
+.furin-masonry-reveal__cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  gap: 2px;
+  padding: 26px 12px 11px;
+  background: linear-gradient(180deg, transparent, rgba(5, 6, 9, 0.72));
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+}
+.furin-masonry-reveal__cap b { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; }
+.furin-masonry-reveal__cap span { font-size: 11px; color: rgba(243, 245, 248, 0.65); letter-spacing: 0.04em; }
+.furin-masonry-reveal.is-in .furin-masonry-reveal__tile:hover { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.28), 0 22px 40px -14px rgba(0, 0, 0, 0.9); }
+.furin-masonry-reveal.is-in .furin-masonry-reveal__tile:hover .furin-masonry-reveal__art { transform: scale(1.07); }
+.furin-masonry-reveal.is-in .furin-masonry-reveal__tile:hover .furin-masonry-reveal__cap { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .furin-masonry-reveal__tile { opacity: 1; transform: none; filter: none; transition: none; }
+  .furin-masonry-reveal.is-in .furin-masonry-reveal__tile { transition: box-shadow 0.3s ease; }
+  .furin-masonry-reveal__shine { display: none; }
+  .furin-masonry-reveal__art, .furin-masonry-reveal__cap { transition: none; }
+}

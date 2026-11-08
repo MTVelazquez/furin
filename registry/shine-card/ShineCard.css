@@ -1,0 +1,199 @@
+/* Luz del cursor (0 a 1) y su ángulo: registradas para que el navegador las interpole con suavidad. */
+@property --sc-x { syntax: "<number>"; inherits: true; initial-value: 0.28; }
+@property --sc-y { syntax: "<number>"; inherits: true; initial-value: 0.12; }
+@property --sc-a { syntax: "<angle>"; inherits: true; initial-value: -45deg; }
+
+.furin-shine-card {
+  --sc-i: 1;
+  --sc-r: 22px;
+  --sc-grain: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='300'%20height='300'%3E%3Cfilter%20id='g'%20x='0'%20y='0'%20width='100%25'%20height='100%25'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.004%200.75'%20numOctaves='3'%20seed='41'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='matrix'%20values='0.33%200.33%200.33%200%200%200.33%200.33%200.33%200%200%200.33%200.33%200.33%200%200%200%200%200%200%201'/%3E%3CfeComponentTransfer%3E%3CfeFuncR%20type='linear'%20slope='2.2'%20intercept='-0.6'/%3E%3CfeFuncG%20type='linear'%20slope='2.2'%20intercept='-0.6'/%3E%3CfeFuncB%20type='linear'%20slope='2.2'%20intercept='-0.6'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23g)'/%3E%3C/svg%3E");
+  position: relative;
+  width: min(380px, 92%);
+  border-radius: var(--sc-r);
+  isolation: isolate;
+  color: #e9ecf0;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.75),
+    0 2px 2px rgba(0, 0, 0, 0.5),
+    0 16px 22px -8px rgba(0, 0, 0, 0.6),
+    0 38px 52px -22px rgba(0, 0, 0, 0.85),
+    0 44px 70px -34px rgba(190, 205, 225, 0.18);
+  transform: perspective(900px) rotateX(calc((var(--sc-y) - 0.5) * -5deg)) rotateY(calc((var(--sc-x) - 0.5) * 7deg));
+  transition:
+    --sc-x 0.35s cubic-bezier(0.2, 0.75, 0.25, 1),
+    --sc-y 0.35s cubic-bezier(0.2, 0.75, 0.25, 1),
+    --sc-a 0.35s cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.furin-shine-card--titanium {
+  --sc-body: linear-gradient(158deg, #4a4e55 0%, #2d3036 38%, #23262b 62%, #33373d 100%);
+  --sc-rim: #fff;
+  --sc-title: linear-gradient(180deg, #ffffff 0%, #c4c9d1 55%, #8f96a0 100%);
+  --sc-text: #b4bac3;
+  --sc-eyebrow: #9aa1ab;
+}
+.furin-shine-card--aluminum {
+  --sc-body: linear-gradient(158deg, #d6dae0 0%, #b3bac3 40%, #a3aab4 62%, #c4c9d1 100%);
+  --sc-rim: #fff;
+  --sc-title: linear-gradient(180deg, #2a2e34 0%, #14161a 100%);
+  --sc-text: #3a3f46;
+  --sc-eyebrow: #5b626c;
+}
+.furin-shine-card--graphite {
+  --sc-body: linear-gradient(158deg, #2a2d33 0%, #17191d 45%, #101214 62%, #1d2024 100%);
+  --sc-rim: #dfe3e8;
+  --sc-title: linear-gradient(180deg, #f4f6f8 0%, #aab1ba 100%);
+  --sc-text: #8f96a0;
+  --sc-eyebrow: #6c737d;
+}
+
+/* Capa de recorte: aquí viven el metal y todas las capas de luz (grano, foco, barrido, borde). Recorta al radio de la tarjeta de tres
+   formas a la vez, para que ningún motor deje salir el brillo por la esquina aunque la capa esté compuesta o mezclada:
+   border-radius + overflow, clip-path redondeado (también recorta capas compuestas) y una máscara opaca que obliga a Safari a
+   usar un recorte redondeado real. Está aparte de la tarjeta para que su sombra y su transform 3D no se recorten ni lo estorben. */
+.furin-shine-card__clip {
+  position: relative;
+  border-radius: inherit;
+  overflow: hidden;
+  isolation: isolate;
+  -webkit-clip-path: inset(0 round var(--sc-r));
+  clip-path: inset(0 round var(--sc-r));
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(#fff, #000);
+  /* Velo satinado fijo sobre el metal. */
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 34%, rgba(255, 255, 255, 0.05) 58%, rgba(255, 255, 255, 0) 80%),
+    var(--sc-body);
+}
+
+/* Cepillado: ruido SVG estirado en horizontal, mezclado con el metal de abajo. */
+.furin-shine-card__grain {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: var(--sc-grain) 0 0 / 300px 300px;
+  mix-blend-mode: soft-light;
+  opacity: 0.6;
+}
+
+/* Borde de metal: un anillo de cromo cuya luz gira hacia el cursor. */
+.furin-shine-card__border {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  padding: 1.5px;
+  pointer-events: none;
+  background: conic-gradient(
+    from calc(var(--sc-a) - 90deg) at 50% 50%,
+    rgba(255, 255, 255, calc(0.95 * var(--sc-i))) 0deg,
+    rgba(190, 198, 208, 0.7) 40deg,
+    rgba(90, 96, 106, 0.55) 100deg,
+    rgba(40, 43, 48, 0.9) 170deg,
+    rgba(90, 96, 106, 0.55) 240deg,
+    rgba(190, 198, 208, 0.7) 320deg,
+    rgba(255, 255, 255, calc(0.95 * var(--sc-i))) 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+/* Foco suave bajo el cursor. */
+.furin-shine-card__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(300px circle at calc(var(--sc-x) * 100%) calc(var(--sc-y) * 100%), rgba(255, 255, 255, calc(0.2 * var(--sc-i))), rgba(255, 255, 255, 0) 70%);
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.furin-shine-card:hover .furin-shine-card__glow { opacity: 1; }
+
+/* Barrido de brillo satinado: una franja ancha con borde suave y una veta oscura detrás. */
+.furin-shine-card__sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    106deg,
+    transparent 38%,
+    rgba(255, 255, 255, calc(0.05 * var(--sc-i))) 43%,
+    rgba(255, 255, 255, calc(0.24 * var(--sc-i))) 49%,
+    rgba(255, 255, 255, calc(0.34 * var(--sc-i))) 50.5%,
+    rgba(255, 255, 255, calc(0.08 * var(--sc-i))) 55%,
+    transparent 60%,
+    rgba(0, 0, 0, 0.16) 66%,
+    transparent 74%
+  ) 100% 0 / 260% 100% no-repeat;
+  opacity: 0;
+}
+
+/* Disco pulido de la esquina. */
+.furin-shine-card__badge {
+  position: absolute;
+  z-index: 2;
+  top: 22px;
+  right: 22px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.5) 0 18%, rgba(255, 255, 255, 0) 19%),
+    radial-gradient(circle at 36% 28%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 38%),
+    conic-gradient(from calc(var(--sc-a) + 30deg), #f1f4f7, #7d848e, #fafbfc, #5b626b, #eef1f4, #8a919b, #f1f4f7);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 5px 8px rgba(0, 0, 0, 0.55), inset 0 -3px 4px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.furin-shine-card__body {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 10px;
+  padding: 26px 26px 22px;
+  min-height: 200px;
+  align-content: start;
+}
+.furin-shine-card__eyebrow {
+  font: 600 10.5px / 1 ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sc-eyebrow);
+}
+.furin-shine-card__title {
+  margin: 4px 0 0;
+  max-width: calc(100% - 52px);
+  font: 700 28px / 1.12 "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  letter-spacing: -0.02em;
+  color: transparent;
+  background: var(--sc-title);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.furin-shine-card__text {
+  margin: 0;
+  max-width: 30ch;
+  font: 400 14.5px / 1.55 "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--sc-text);
+}
+.furin-shine-card__footer {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.35);
+  font: 600 11px / 1 ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sc-eyebrow);
+}
+.furin-shine-card--aluminum .furin-shine-card__footer { border-top-color: rgba(0, 0, 0, 0.14); box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.5); }
+
+@media (prefers-reduced-motion: reduce) {
+  .furin-shine-card { transform: none; transition: none; }
+}

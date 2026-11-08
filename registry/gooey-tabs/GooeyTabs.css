@@ -1,0 +1,38 @@
+.furin-gooey-tabs {
+  position: relative;
+  display: inline-flex;
+  padding: 6px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  max-width: 100%;
+  isolation: isolate;
+}
+.furin-gooey-tabs__svg { position: absolute; width: 0; height: 0; pointer-events: none; }
+.furin-gooey-tabs__goo { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; }
+.furin-gooey-tabs__blob {
+  position: absolute; left: 0; top: 0;
+  border-radius: 999px;
+  background: var(--furin-gt-pill, #eef1ff);
+  opacity: 0;
+  will-change: transform, width, height;
+}
+.furin-gooey-tabs.is-ready .furin-gooey-tabs__blob { opacity: 1; }
+.furin-gooey-tabs__lista { position: relative; z-index: 1; display: flex; gap: 0; }
+.furin-gooey-tabs__tab {
+  appearance: none; border: 0; background: transparent; margin: 0;
+  padding: 11px 20px;
+  border-radius: 999px;
+  font: 600 15px/1.2 system-ui, -apple-system, "Segoe UI", sans-serif;
+  letter-spacing: -0.005em;
+  color: var(--furin-gt-text, #a8b0c6);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.28s ease 0.06s;
+  -webkit-tap-highlight-color: transparent;
+}
+.furin-gooey-tabs__tab:hover { color: #fff; }
+.furin-gooey-tabs__tab[aria-selected="true"] { color: var(--furin-gt-active, #0b0c12); }
+.furin-gooey-tabs__tab:focus-visible { outline: 2px solid var(--furin-gt-pill, #eef1ff); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .furin-gooey-tabs__tab { transition: none; } }

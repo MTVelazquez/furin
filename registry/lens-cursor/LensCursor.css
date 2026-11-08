@@ -1,0 +1,95 @@
+.furin-lens-cursor {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: Geist, system-ui, -apple-system, sans-serif;
+  color: #fff;
+  touch-action: none;
+}
+.furin-lens-cursor.is-sin-cursor { cursor: none; }
+.furin-lens-cursor__mundo-contenido {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: linear-gradient(155deg, #10163a 0%, #1c1046 55%, #0b2638 100%);
+}
+.furin-lens-cursor__rejilla {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+.furin-lens-cursor__formas i { position: absolute; border-radius: 50%; }
+.furin-lens-cursor__formas i:nth-child(1) { width: 150px; height: 150px; left: 4%; top: 8%; background: radial-gradient(circle at 32% 28%, #ffd0ea, #ff5aa5 45%, #c21f78); }
+.furin-lens-cursor__formas i:nth-child(2) { width: 190px; height: 190px; right: 2%; bottom: -8%; background: radial-gradient(circle at 34% 30%, #bcd3ff, #4f7dff 45%, #2437c9); }
+.furin-lens-cursor__formas i:nth-child(3) { width: 90px; height: 90px; right: 24%; top: 6%; background: radial-gradient(circle at 34% 30%, #fff2cc, #ffb347 50%, #e6700f); }
+.furin-lens-cursor__formas i:nth-child(4) { width: 70px; height: 70px; left: 26%; bottom: 6%; background: radial-gradient(circle at 34% 30%, #d3fff3, #37e0b9 45%, #0a8e86); }
+.furin-lens-cursor__micro {
+  position: absolute;
+  inset: 0;
+  padding: 10px 12px;
+  column-count: 4;
+  column-gap: 12px;
+  overflow: hidden;
+  font-size: 7px;
+  line-height: 1.5;
+  font-weight: 500;
+  text-align: justify;
+  color: rgba(255, 255, 255, 0.55);
+  user-select: none;
+}
+.furin-lens-cursor__titulo {
+  position: relative;
+  padding: 10px 18px;
+  border-radius: 16px;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-align: center;
+  text-shadow: 0 2px 18px rgba(5, 8, 40, 0.75), 0 0 2px rgba(5, 8, 40, 0.6);
+  background: rgba(10, 14, 50, 0.28);
+}
+.furin-lens-cursor__titulo:empty { display: none; }
+.furin-lens-cursor__lente {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--furin-lens-cursor-size);
+  height: var(--furin-lens-cursor-size);
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 0;
+  transform: translate(-999px, -999px) scale(0.001);
+  pointer-events: none;
+  /* La sombra va en otra capa porque el overflow la recortaría: ver __rim. */
+}
+.furin-lens-cursor__mundo { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.furin-lens-cursor__cristal {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0) 55%, rgba(255, 255, 255, 0.1) 100%);
+  box-shadow: inset 0 -14px 22px -10px rgba(255, 255, 255, 0.28), inset 0 12px 18px -12px rgba(255, 255, 255, 0.4), inset 0 0 26px rgba(10, 14, 60, 0.28);
+}
+.furin-lens-cursor__brillo {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse 34% 20% at 30% 18%, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 100%),
+    radial-gradient(ellipse 30% 14% at 74% 88%, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0) 100%);
+}
+.furin-lens-cursor__rim {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 2px;
+  background: conic-gradient(from 210deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.15) 20%, rgba(255, 255, 255, 0.05) 45%, rgba(255, 255, 255, 0.65) 75%, rgba(255, 255, 255, 0.95));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}

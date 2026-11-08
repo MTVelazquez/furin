@@ -1,0 +1,59 @@
+.furin-ring-cursor {
+  --furin-ring-color: #fff;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  overflow: hidden;
+  touch-action: pan-y;
+  font-family: Geist, system-ui, -apple-system, sans-serif;
+  color: #fff;
+}
+@media (hover: hover) and (pointer: fine) {
+  .furin-ring-cursor--sin-cursor, .furin-ring-cursor--sin-cursor * { cursor: none !important; }
+}
+.furin-ring-cursor__contenido { position: relative; width: 100%; height: 100%; display: grid; place-items: center; }
+.furin-ring-cursor__capa { position: absolute; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
+.furin-ring-cursor__capa--global { position: fixed; z-index: 2147483000; overflow: visible; }
+.furin-ring-cursor__anillo {
+  position: absolute;
+  left: 0; top: 0;
+  box-sizing: border-box;
+  border: 1.5px solid color-mix(in srgb, var(--furin-ring-color) 80%, transparent);
+  background: transparent;
+  opacity: 0;
+  will-change: transform, width, height;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.furin-ring-cursor__anillo.is-snap {
+  background: color-mix(in srgb, var(--furin-ring-color) 11%, transparent);
+  border-color: color-mix(in srgb, var(--furin-ring-color) 55%, transparent);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 10px 30px -10px color-mix(in srgb, var(--furin-ring-color) 35%, transparent);
+}
+.furin-ring-cursor__punto {
+  position: absolute;
+  left: -2.5px; top: -2.5px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--furin-ring-color);
+  opacity: 0;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--furin-ring-color) 60%, transparent);
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Contenido de ejemplo */
+.furin-ring-cursor__demo { display: grid; justify-items: center; gap: 22px; padding: 0 20px; text-align: center; }
+.furin-ring-cursor__titulo { margin: 0; font-size: clamp(24px, 5.6vw, 32px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; color: #f5f6f8; }
+.furin-ring-cursor__fila { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.furin-ring-cursor__btn {
+  appearance: none;
+  font: 500 14px/1 Geist, system-ui, sans-serif;
+  color: #e8eaee;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+}
+.furin-ring-cursor__btn--lleno { background: #f5f6f8; color: #0b0c0f; border-color: transparent; }
+.furin-ring-cursor__enlace { font-size: 14px; color: #aab1c0; text-decoration: none; padding: 8px 10px; border-radius: 8px; }
+.furin-ring-cursor__btn:focus-visible, .furin-ring-cursor__enlace:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.7); outline-offset: 3px; }

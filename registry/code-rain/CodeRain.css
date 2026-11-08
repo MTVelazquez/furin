@@ -1,0 +1,25 @@
+.furin-code-rain {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--furin-code-rain-bg, #07090c);
+  touch-action: pan-y;
+}
+.furin-code-rain__lienzo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
+/* Profundidad de campo: el plano lejano se suaviza un poco y el cercano es un bokeh de letras grandes. */
+.furin-code-rain__lienzo--lejos { filter: blur(0.7px); }
+.furin-code-rain__lienzo--cerca { filter: blur(2.4px); }
+.furin-code-rain__vineta {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 48% at 50% 50%, rgba(0, 0, 0, 0.45), transparent 100%),
+    radial-gradient(ellipse 92% 88% at 50% 50%, transparent 40%, var(--furin-code-rain-bg, #07090c) 115%);
+}
+.furin-code-rain__contenido { position: relative; z-index: 2; max-width: 100%; pointer-events: none; }
+.furin-code-rain__contenido > * { pointer-events: auto; }

@@ -1,0 +1,19 @@
+.furin-orbit-text {
+  display: block;
+  max-width: 100%;
+  aspect-ratio: 1;
+  font-family: "Geist", "Inter", "SF Pro Display", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.furin-orbit-text svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.furin-orbit-text__texto {
+  fill: var(--furin-ot-color);
+  font-weight: 650;
+  white-space: pre;
+  text-rendering: geometricPrecision;
+}
+.furin-orbit-text__texto--interior { fill: color-mix(in srgb, var(--furin-ot-color) 52%, transparent); font-weight: 560; }
+.furin-orbit-text__sep { fill: var(--furin-ot-accent); }
+.furin-orbit-text__aro { fill: none; stroke: color-mix(in srgb, var(--furin-ot-color) 14%, transparent); stroke-width: 1; }
+.furin-orbit-text__aro--fino { stroke: color-mix(in srgb, var(--furin-ot-color) 8%, transparent); }
+.furin-orbit-text__centro { fill: var(--furin-ot-accent); }

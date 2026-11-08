@@ -1,0 +1,23 @@
+.furin-snowfall {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(180deg, var(--furin-snowfall-bg2, #111827) 0%, var(--furin-snowfall-bg, #070a10) 100%);
+  touch-action: pan-y;
+}
+.furin-snowfall__lienzo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
+/* Neblina baja y viñeta: dan atmósfera y hacen que la nieve del centro quede más limpia para el texto. */
+.furin-snowfall__bruma {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(0deg, rgba(190, 210, 240, 0.12), transparent 38%),
+    radial-gradient(ellipse 92% 88% at 50% 45%, transparent 45%, rgba(0, 0, 0, 0.5) 118%);
+}
+.furin-snowfall__contenido { position: relative; z-index: 2; max-width: 100%; pointer-events: none; }
+.furin-snowfall__contenido > * { pointer-events: auto; }

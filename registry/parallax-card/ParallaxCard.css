@@ -1,0 +1,117 @@
+.furin-parallax-card {
+  --furin-parallax-card-sh: 0px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  display: grid;
+  place-items: center;
+  perspective: var(--furin-parallax-card-persp);
+  touch-action: pan-y;
+  font-family: Geist, -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+}
+.furin-parallax-card__shadow,
+.furin-parallax-card__tilt {
+  grid-area: 1 / 1;
+  width: min(var(--furin-parallax-card-w), calc(100% - 48px));
+  aspect-ratio: 3 / 4;
+}
+.furin-parallax-card__shadow {
+  border-radius: 8%;
+  background: #000;
+  filter: blur(26px);
+  opacity: 0.65;
+  transform: translate(var(--furin-parallax-card-sh), 6%) scale(0.88, 0.9);
+  pointer-events: none;
+}
+.furin-parallax-card__tilt {
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--furin-parallax-card-rx, 5deg)) rotateY(var(--furin-parallax-card-ry, -9deg));
+}
+.furin-parallax-card__layer {
+  position: absolute;
+  inset: 0;
+  border-radius: 7.5% / 5.6%;
+  container-type: inline-size;
+  pointer-events: none;
+  /* z en px; la escala 1 − z/perspectiva deja la composición intacta en reposo. */
+  --furin-parallax-card-zz: calc(var(--furin-parallax-card-z) * var(--furin-parallax-card-depth));
+  transform:
+    translate3d(calc(var(--furin-parallax-card-px, 0) * var(--furin-parallax-card-z) * var(--furin-parallax-card-depth) * -0.22px),
+                calc(var(--furin-parallax-card-py, 0) * var(--furin-parallax-card-z) * var(--furin-parallax-card-depth) * -0.22px),
+                calc(var(--furin-parallax-card-zz) * 1px))
+    scale(calc(1 - var(--furin-parallax-card-zz) / var(--furin-parallax-card-persp-n)));
+}
+.furin-parallax-card__sky,
+.furin-parallax-card__shine,
+.furin-parallax-card__clip { overflow: hidden; }
+.furin-parallax-card__layer svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+
+.furin-parallax-card__sky {
+  background:
+    radial-gradient(90% 45% at 50% 76%, color-mix(in srgb, var(--furin-parallax-card-to) 70%, #fff) 0%, transparent 70%),
+    linear-gradient(180deg, var(--furin-parallax-card-from) 0%, color-mix(in srgb, var(--furin-parallax-card-from) 55%, var(--furin-parallax-card-to)) 52%, var(--furin-parallax-card-to) 100%);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
+}
+
+.furin-parallax-card__planet {
+  position: absolute;
+  left: 29%;
+  top: calc(52 / 133 * 100% - 21%);
+  width: 42%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 26%, #fff1d6 0%, color-mix(in srgb, var(--furin-parallax-card-accent) 70%, #fff) 14%, var(--furin-parallax-card-accent) 34%, #d9506f 62%, #4a1668 100%);
+  box-shadow:
+    inset -4.2cqw -4.6cqw 8cqw rgb(28 4 70 / 0.75),
+    inset 1.6cqw 1.6cqw 4cqw rgb(255 238 205 / 0.35),
+    0 0 14cqw rgb(255 150 120 / 0.38);
+}
+.furin-parallax-card__planet::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-linear-gradient(-16deg, rgb(255 255 255 / 0.13) 0 2.4%, transparent 2.4% 6.5%, rgb(60 0 60 / 0.12) 6.5% 8.5%, transparent 8.5% 13%);
+  mix-blend-mode: soft-light;
+}
+
+.furin-parallax-card__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 8cqw 7cqw;
+  color: #fff;
+}
+.furin-parallax-card__eyebrow {
+  align-self: flex-start;
+  margin-bottom: 3cqw;
+  padding: 1.4cqw 3cqw;
+  border-radius: 99px;
+  font: 600 3cqw/1 Geist, system-ui, sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: rgb(255 255 255 / 0.14);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.28);
+}
+.furin-parallax-card__title {
+  margin: 0;
+  font: 700 12cqw/1 Geist, -apple-system, system-ui, sans-serif;
+  letter-spacing: -0.035em;
+  text-shadow: 0 0.6cqw 2.2cqw rgb(25 6 70 / 0.65);
+}
+.furin-parallax-card__caption {
+  margin: 2.4cqw 0 0;
+  max-width: 78%;
+  font: 500 4.2cqw/1.4 Geist, system-ui, sans-serif;
+  color: rgb(255 255 255 / 0.82);
+  text-shadow: 0 0.3cqw 1.4cqw rgb(25 6 70 / 0.7);
+}
+.furin-parallax-card__shine {
+  background:
+    radial-gradient(circle at var(--furin-parallax-card-gx, 50%) var(--furin-parallax-card-gy, 35%), rgb(255 255 255 / 0.3), transparent 42%),
+    linear-gradient(118deg, rgb(255 255 255 / 0.16) 0%, transparent 26%, transparent 72%, rgb(255 255 255 / 0.07) 100%);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.2), inset 0 1.2cqw 2cqw -1cqw rgb(255 255 255 / 0.35);
+}

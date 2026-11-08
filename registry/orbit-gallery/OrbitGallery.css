@@ -1,0 +1,110 @@
+.furin-orbit-gallery {
+  --furin-og-w: 132px;
+  --furin-og-h: 184px;
+  --furin-og-r: 190px;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  width: min(520px, 100%);
+  font-family: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #f3f5f8;
+}
+.furin-orbit-gallery__scene {
+  position: relative;
+  width: 100%;
+  height: calc(var(--furin-og-h) + 96px);
+  perspective: 1050px;
+  perspective-origin: 50% 24%;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.furin-orbit-gallery__scene:active { cursor: grabbing; }
+.furin-orbit-gallery__scene:focus-visible { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35); border-radius: 18px; }
+
+.furin-orbit-gallery__ring {
+  position: absolute;
+  left: 50%;
+  top: 46px;
+  width: 0;
+  height: var(--furin-og-h);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.furin-orbit-gallery__card {
+  position: absolute;
+  left: calc(var(--furin-og-w) / -2);
+  top: 0;
+  width: var(--furin-og-w);
+  height: var(--furin-og-h);
+  transform-style: preserve-3d;
+  --furin-og-dim: 0;
+}
+.furin-orbit-gallery__face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: #14161b;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 18px 40px -12px rgba(0, 0, 0, 0.75);
+}
+.furin-orbit-gallery__back { transform: rotateY(180deg); }
+.furin-orbit-gallery__art { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.furin-orbit-gallery__shade {
+  position: absolute;
+  inset: 0;
+  background: #07080b;
+  opacity: var(--furin-og-dim);
+  pointer-events: none;
+}
+.furin-orbit-gallery__back .furin-orbit-gallery__shade { opacity: calc(var(--furin-og-dim) * 0.5 + 0.38); }
+.furin-orbit-gallery__back .furin-orbit-gallery__art { filter: blur(1.5px) saturate(0.8); }
+/* Brillo de cristal diagonal y filo de luz en el borde superior. */
+.furin-orbit-gallery__gloss {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.04) 32%, rgba(255, 255, 255, 0) 52%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 14%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  border-radius: inherit;
+}
+.furin-orbit-gallery__num {
+  position: absolute;
+  left: 11px;
+  bottom: 9px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Sombra de contacto del anillo sobre el "piso". */
+.furin-orbit-gallery__floor {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--furin-og-h) + 20px);
+  width: calc(var(--furin-og-r) * 2.1);
+  height: 56px;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.furin-orbit-gallery__caption { display: grid; justify-items: center; gap: 3px; min-height: 40px; text-align: center; }
+.furin-orbit-gallery__title { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; animation: furin-orbit-gallery-in 0.4s cubic-bezier(0.2, 0.9, 0.3, 1) both; }
+.furin-orbit-gallery__sub { font-size: 12px; color: rgba(243, 245, 248, 0.5); letter-spacing: 0.04em; }
+@keyframes furin-orbit-gallery-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .furin-orbit-gallery__title { animation: none; }
+}

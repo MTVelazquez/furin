@@ -1,0 +1,32 @@
+.furin-border-beam {
+  position: relative;
+  box-sizing: border-box;
+  width: min(var(--furin-border-beam-w), calc(100% - 48px));
+  min-height: var(--furin-border-beam-min);
+  display: grid;
+  border-radius: var(--furin-border-beam-r);
+  background: var(--furin-border-beam-bg);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08), 0 30px 60px -30px rgb(0 0 0 / 0.8);
+  color: #f2f3f7;
+  font-family: Geist, -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+}
+.furin-border-beam__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px 32px;
+  border-radius: inherit;
+  /* Un velo de luz arriba, como una tarjeta de vidrio oscuro. */
+  background: radial-gradient(120% 90% at 50% -20%, rgb(255 255 255 / 0.06), transparent 60%);
+}
+.furin-border-beam__title { margin: 0; font: 650 26px/1.15 Geist, system-ui, sans-serif; letter-spacing: -0.025em; }
+.furin-border-beam__caption { margin: 10px 0 0; font: 400 15px/1.5 Geist, system-ui, sans-serif; color: rgb(255 255 255 / 0.55); max-width: 30ch; }
+.furin-border-beam__canvas {
+  position: absolute;
+  left: calc(var(--furin-border-beam-pad) * -1);
+  top: calc(var(--furin-border-beam-pad) * -1);
+  width: calc(100% + var(--furin-border-beam-pad) * 2);
+  height: calc(100% + var(--furin-border-beam-pad) * 2);
+  pointer-events: none;
+}

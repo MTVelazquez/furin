@@ -1,0 +1,177 @@
+/* Posición del reflejo (0 a 1): registrada para que el navegador la interpole con suavidad. */
+@property --fmb-x { syntax: "<number>"; inherits: true; initial-value: 0.3; }
+@property --fmb-y { syntax: "<number>"; inherits: true; initial-value: 0.05; }
+
+.furin-metal-button {
+  --fmb-h: 58px; --fmb-r: 18px; --fmb-px: 40px; --fmb-fs: 16px;
+  --fmb-spec: 1;
+  --fmb-grain: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='240'%20height='240'%3E%3Cfilter%20id='g'%20x='0'%20y='0'%20width='100%25'%20height='100%25'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.012%200.9'%20numOctaves='2'%20seed='7'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='matrix'%20values='0.33%200.33%200.33%200%200%200.33%200.33%200.33%200%200%200.33%200.33%200.33%200%200%200%200%200%200%201'/%3E%3CfeComponentTransfer%3E%3CfeFuncR%20type='linear'%20slope='2.4'%20intercept='-0.7'/%3E%3CfeFuncG%20type='linear'%20slope='2.4'%20intercept='-0.7'/%3E%3CfeFuncB%20type='linear'%20slope='2.4'%20intercept='-0.7'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23g)'/%3E%3C/svg%3E");
+  --fmb-spring: linear(0, 0.62 9%, 1.28 22%, 1.1 34%, 0.96 48%, 1.025 62%, 0.995 78%, 1);
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  height: var(--fmb-h);
+  padding: 0 var(--fmb-px);
+  border: 0;
+  border-radius: var(--fmb-r);
+  background: none;
+  color: var(--fmb-ink);
+  font: 700 var(--fmb-fs) / 1 "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  cursor: pointer;
+  isolation: isolate;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.7),
+    0 1px 1px rgba(0, 0, 0, 0.5),
+    0 7px 10px -3px rgba(0, 0, 0, 0.55),
+    0 22px 30px -12px rgba(0, 0, 0, 0.75),
+    0 30px 44px -24px rgba(190, 205, 225, 0.22);
+  transition:
+    --fmb-x 0.45s cubic-bezier(0.2, 0.75, 0.25, 1),
+    --fmb-y 0.45s cubic-bezier(0.2, 0.75, 0.25, 1),
+    transform 0.55s var(--fmb-spring),
+    box-shadow 0.4s ease;
+}
+.furin-metal-button:hover:not(:disabled) { transform: translateY(-1px); }
+.furin-metal-button:active:not(:disabled) {
+  transform: translateY(3px) scale(0.982);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.75),
+    0 0 1px rgba(0, 0, 0, 0.6),
+    0 2px 3px -1px rgba(0, 0, 0, 0.6),
+    0 8px 12px -6px rgba(0, 0, 0, 0.7),
+    0 12px 20px -14px rgba(190, 205, 225, 0.12);
+  transition:
+    --fmb-x 0.45s cubic-bezier(0.2, 0.75, 0.25, 1),
+    --fmb-y 0.45s cubic-bezier(0.2, 0.75, 0.25, 1),
+    transform 0.07s ease-out,
+    box-shadow 0.07s ease-out;
+}
+.furin-metal-button:focus-visible { outline: 2px solid rgba(150, 185, 255, 0.95); outline-offset: 5px; }
+.furin-metal-button:disabled { cursor: not-allowed; filter: grayscale(0.7) brightness(0.62); }
+
+/* Bisel: un anillo con el reflejo de un estudio (claro arriba, oscuro al centro, claro abajo). */
+.furin-metal-button__rim {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    calc(168deg + (var(--fmb-x) - 0.5) * 56deg),
+    var(--fmb-rim-0) 0%,
+    var(--fmb-rim-1) 28%,
+    var(--fmb-rim-2) 52%,
+    var(--fmb-rim-3) 76%,
+    var(--fmb-rim-4) 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Cara pulida: horizonte de estudio, canto marcado por una ranura oscura y luz en el borde superior. */
+.furin-metal-button__face {
+  position: absolute;
+  inset: 4px;
+  overflow: hidden;
+  border-radius: calc(var(--fmb-r) - 4px);
+  background: var(--fmb-face);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.32),
+    inset 0 1px 1px rgba(255, 255, 255, 0.95),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.16);
+  transition: filter 0.2s ease, box-shadow 0.2s ease;
+}
+.furin-metal-button:active:not(:disabled) .furin-metal-button__face {
+  filter: brightness(0.93);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.4),
+    inset 0 5px 9px rgba(0, 0, 0, 0.34),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35);
+}
+
+/* Micro-cepillado: ruido SVG estirado en horizontal. */
+.furin-metal-button__grain {
+  position: absolute;
+  inset: 0;
+  background: var(--fmb-grain) 0 0 / 240px 240px;
+  mix-blend-mode: soft-light;
+  opacity: 0.85;
+}
+
+/* Reflejo anisótropo: una banda satinada que se desliza con el cursor y un punto caliente bajo él. */
+.furin-metal-button__spec {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(70px 36px at calc(var(--fmb-x) * 100%) calc(var(--fmb-y) * 100%), rgba(255, 255, 255, calc(0.7 * var(--fmb-spec))), transparent 72%),
+    linear-gradient(
+      100deg,
+      transparent calc(var(--fmb-x) * 100% - 34%),
+      rgba(255, 255, 255, calc(0.26 * var(--fmb-spec))) calc(var(--fmb-x) * 100% - 6%),
+      rgba(255, 255, 255, calc(0.4 * var(--fmb-spec))) calc(var(--fmb-x) * 100%),
+      transparent calc(var(--fmb-x) * 100% + 14%),
+      rgba(0, 0, 0, calc(0.2 * var(--fmb-spec))) calc(var(--fmb-x) * 100% + 34%),
+      transparent calc(var(--fmb-x) * 100% + 62%)
+    );
+}
+
+/* Destello único al entrar con el cursor. */
+.furin-metal-button__sheen {
+  position: absolute;
+  top: -25%;
+  bottom: -25%;
+  left: 0;
+  width: 34%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.7) 50%, transparent);
+  transform: translateX(-170%) skewX(-18deg);
+  opacity: 0;
+  pointer-events: none;
+}
+.furin-metal-button:hover:not(:disabled) .furin-metal-button__sheen { animation: furin-metal-button-sheen 0.9s cubic-bezier(0.3, 0.1, 0.25, 1); }
+@keyframes furin-metal-button-sheen {
+  from { transform: translateX(-170%) skewX(-18deg); opacity: 1; }
+  to { transform: translateX(480%) skewX(-18deg); opacity: 1; }
+}
+
+/* Texto impreso en el metal: tinta oscura con un filo de luz debajo. */
+.furin-metal-button__label {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 0 var(--fmb-ink-edge), 0 -1px 0 var(--fmb-ink-shade);
+  transition: transform 0.07s ease-out;
+}
+.furin-metal-button:active:not(:disabled) .furin-metal-button__label { transform: translateY(0.5px); }
+
+/* Aleaciones */
+.furin-metal-button--silver {
+  --fmb-face: linear-gradient(180deg, #fbfcfd 0%, #e4e8ec 8%, #bcc3cc 30%, #8b939e 49%, #b3bac3 52%, #d6dbe2 68%, #eef1f4 90%, #f8f9fb 100%);
+  --fmb-rim-0: #ffffff; --fmb-rim-1: #aeb5be; --fmb-rim-2: #2a2e34; --fmb-rim-3: #8c939d; --fmb-rim-4: #f4f6f8;
+  --fmb-ink: #1d2127; --fmb-ink-edge: rgba(255, 255, 255, 0.85); --fmb-ink-shade: rgba(0, 0, 0, 0);
+}
+.furin-metal-button--titanium {
+  --fmb-face: linear-gradient(180deg, #e4e1db 0%, #c8c4bc 10%, #a29e96 40%, #8a867e 51%, #a9a59d 64%, #cac6be 100%);
+  --fmb-rim-0: #f6f3ee; --fmb-rim-1: #a39f97; --fmb-rim-2: #35332f; --fmb-rim-3: #8c8881; --fmb-rim-4: #e4e0d9;
+  --fmb-ink: #1b1916; --fmb-ink-edge: rgba(255, 255, 255, 0.55); --fmb-ink-shade: rgba(0, 0, 0, 0);
+}
+.furin-metal-button--graphite {
+  --fmb-face: linear-gradient(180deg, #6a7079 0%, #454a52 14%, #2b2f35 46%, #1c1f24 52%, #2d3138 68%, #4d535c 100%);
+  --fmb-rim-0: #dfe3e8; --fmb-rim-1: #7a808a; --fmb-rim-2: #121417; --fmb-rim-3: #5a606a; --fmb-rim-4: #b9bfc8;
+  --fmb-ink: #eef1f4; --fmb-ink-edge: rgba(0, 0, 0, 0.5); --fmb-ink-shade: rgba(255, 255, 255, 0.12);
+}
+.furin-metal-button--gold {
+  --fmb-face: linear-gradient(180deg, #fff6d2 0%, #f6e29a 10%, #dcb554 40%, #bf9232 51%, #dcb75e 64%, #f3df9c 100%);
+  --fmb-rim-0: #fff8dc; --fmb-rim-1: #cfa94a; --fmb-rim-2: #4d3908; --fmb-rim-3: #b88b2b; --fmb-rim-4: #f7e6a8;
+  --fmb-ink: #3a2906; --fmb-ink-edge: rgba(255, 245, 205, 0.8); --fmb-ink-shade: rgba(0, 0, 0, 0);
+}
+
+/* Tamaños */
+.furin-metal-button--sm { --fmb-h: 44px; --fmb-r: 14px; --fmb-px: 28px; --fmb-fs: 14px; }
+.furin-metal-button--md { --fmb-h: 58px; --fmb-r: 18px; --fmb-px: 40px; --fmb-fs: 16px; }
+.furin-metal-button--lg { --fmb-h: 72px; --fmb-r: 22px; --fmb-px: 56px; --fmb-fs: 19px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .furin-metal-button, .furin-metal-button__label, .furin-metal-button__face { transition: none; }
+  .furin-metal-button:hover:not(:disabled) .furin-metal-button__sheen { animation: none; }
+}

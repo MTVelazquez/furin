@@ -1,0 +1,88 @@
+.furin-glass-card {
+  --furin-glass-card-mx: 20%;
+  --furin-glass-card-my: 4%;
+  --furin-glass-card-h: 0;
+  --furin-glass-card-rx: 0deg;
+  --furin-glass-card-ry: 0deg;
+  position: relative;
+  z-index: 1;
+  width: min(330px, 86%);
+  min-height: 190px;
+  display: grid;
+  border-radius: var(--furin-glass-card-radius);
+  transform: perspective(900px) rotateX(var(--furin-glass-card-rx)) rotateY(var(--furin-glass-card-ry));
+  color: #fff;
+  font-family: Geist, system-ui, -apple-system, sans-serif;
+  touch-action: none;
+}
+.furin-glass-card__glass {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.03) 42%, rgba(255, 255, 255, 0.07) 100%),
+    var(--furin-glass-card-tint);
+  /* Sombra de contacto fuera del borde (un filter en el padre rompería el backdrop-filter): ancha y suave + corta y densa. */
+  box-shadow:
+    0 26px 34px -14px rgba(5, 8, 30, 0.5),
+    0 4px 8px -2px rgba(5, 8, 30, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07),
+    inset 0 -14px 28px -10px rgba(255, 255, 255, 0.16),
+    inset 0 18px 30px -18px rgba(255, 255, 255, 0.3);
+}
+.furin-glass-card__glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(70px circle at var(--furin-glass-card-mx) var(--furin-glass-card-my), rgba(255, 255, 255, calc(1.1 * var(--furin-glass-card-glare) * var(--furin-glass-card-h))), rgba(255, 255, 255, 0) 100%),
+    radial-gradient(230px circle at var(--furin-glass-card-mx) var(--furin-glass-card-my), rgba(255, 255, 255, calc(0.7 * var(--furin-glass-card-glare) * (0.45 + var(--furin-glass-card-h) * 0.55))), rgba(255, 255, 255, 0) 62%);
+}
+.furin-glass-card__rim {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  pointer-events: none;
+  background:
+    radial-gradient(160px circle at var(--furin-glass-card-mx) var(--furin-glass-card-my), rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 72%),
+    linear-gradient(140deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.1) 26%, rgba(255, 255, 255, 0.04) 60%, rgba(255, 255, 255, 0.5) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.furin-glass-card__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 22px 24px 24px;
+  text-shadow: 0 1px 12px rgba(10, 14, 50, 0.35);
+}
+.furin-glass-card__chip {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  margin-bottom: auto;
+  border-radius: 12px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.08));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 6px 14px -6px rgba(8, 10, 40, 0.5);
+}
+.furin-glass-card__title { font-size: 24px; font-weight: 650; letter-spacing: -0.02em; line-height: 1.12; }
+.furin-glass-card__caption { font-size: 13.5px; line-height: 1.4; color: rgba(255, 255, 255, 0.78); }
+@media (prefers-reduced-motion: reduce) { .furin-glass-card { transform: none; } }
+
+/* Escena de color: formas con borde nítido para que la refracción se note (solo se pinta con scene). */
+.furin-glass-card-scene { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: linear-gradient(160deg, #0d1236 0%, #1b0f3d 55%, #0b2335 100%); }
+.furin-glass-card-scene i { position: absolute; border-radius: 50%; animation: furin-glass-card-flota var(--t, 14s) ease-in-out infinite alternate; }
+.furin-glass-card-scene i:nth-child(1) { --t: 13s; --dx: 80px; --dy: 40px; width: 190px; height: 190px; left: 6%; top: 10%; background: radial-gradient(circle at 32% 28%, #ffd0ea 0, #ff5aa5 42%, #c21f78 100%); }
+.furin-glass-card-scene i:nth-child(2) { --t: 17s; --dx: -70px; --dy: -50px; width: 230px; height: 230px; right: 0%; top: 28%; background: radial-gradient(circle at 34% 30%, #bcd3ff, #4f7dff 45%, #2437c9); }
+.furin-glass-card-scene i:nth-child(3) { --t: 11s; --dx: 90px; --dy: -60px; width: 150px; height: 150px; left: 30%; bottom: -4%; background: radial-gradient(circle at 34% 30%, #d3fff3, #37e0b9 45%, #0a8e86); }
+.furin-glass-card-scene i:nth-child(4) { --t: 9s; --dx: -60px; --dy: 70px; width: 90px; height: 90px; right: 28%; top: 4%; background: radial-gradient(circle at 34% 30%, #fff2cc, #ffb347 50%, #e6700f); }
+.furin-glass-card-scene b { position: absolute; inset: -10% -14%; background: repeating-linear-gradient(105deg, transparent 0 44px, rgba(255, 255, 255, 0.22) 44px 47px); animation: furin-glass-card-lineas 12s ease-in-out infinite alternate; }
+@keyframes furin-glass-card-flota { to { transform: translate(var(--dx), var(--dy)) scale(1.1); } }
+@keyframes furin-glass-card-lineas { to { transform: translateX(-70px); } }
+@media (prefers-reduced-motion: reduce) { .furin-glass-card-scene i, .furin-glass-card-scene b { animation: none; } }
