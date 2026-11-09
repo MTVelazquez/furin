@@ -47,10 +47,10 @@ import { Aurora } from "furin-ui";
 | [Ink Bloom](https://furin.dev/components/ink-bloom/?utm_source=github) | Drops of ink that bloom in dark water with swirls and tendrils, one after another in a cycle. Tap to drop one; move the cursor to stir the water. |
 | [Lava Lamp](https://furin.dev/components/lava-lamp/?utm_source=github) | A lava lamp with glass and warm light: the wax rises, stretches, merges with other blobs and splits apart. Your cursor warms it. |
 | [Liquid Chrome](https://furin.dev/components/liquid-chrome/?utm_source=github) | A chrome surface that ripples and reflects a luminous environment. |
-| [Live Grid](https://furin.dev/components/rejilla-viva/?utm_source=github) | A grid of dots that part and light up around the cursor, on a spring. |
+| [Live Grid](https://furin.dev/components/live-grid/?utm_source=github) | A grid of dots that part and light up around the cursor, on a spring. |
 | [Prism Light](https://furin.dev/components/prism-light/?utm_source=github) | A real 3D scene in WebGL2: a glass prism (beveled mesh with fresnel and refraction) on a reflective vinyl floor. A light orb follows your cursor and fires a volumetric beam; the spectrum fans out by Snell's law, one ray per color, and lands on the wall and floor with its caustic. The camera parallaxes with the cursor. |
 | [Retro Grid](https://furin.dev/components/retro-grid/?utm_source=github) | A perspective grid that scrolls endlessly toward a horizon with a muted sun; the cursor shifts the horizon and holding down speeds it up. |
-| [Ripple Pond](https://furin.dev/components/estanque/?utm_source=github) | A WebGL water surface: the cursor and raindrops leave ripples that cross, catch the light and warp a grid beneath. |
+| [Ripple Pond](https://furin.dev/components/ripple-pond/?utm_source=github) | A WebGL water surface: the cursor and raindrops leave ripples that cross, catch the light and warp a grid beneath. |
 | [Silk Flow](https://furin.dev/components/silk-flow/?utm_source=github) | A silk fabric that ripples slowly, with an anisotropic thread sheen that shifts with the light and follows the cursor. |
 | [Smoke Field](https://furin.dev/components/smoke-field/?utm_source=github) | Volumetric smoke with studio lighting that rises endlessly; your cursor parts and swirls it, and the smoke fills the gap back in. |
 | [Snowfall](https://furin.dev/components/snowfall/?utm_source=github) | Snow in three layers of depth (far, mid and close bokeh) with a wind that blows toward wherever the cursor is. |
@@ -119,11 +119,11 @@ import { Aurora } from "furin-ui";
 
 | Component | What it does |
 |---|---|
-| [Holo Card](https://furin.dev/components/holograma/?utm_source=github) | A card with 3D tilt and an iridescent holographic foil that follows the cursor. |
-| [Magnet](https://furin.dev/components/iman/?utm_source=github) | Wrap any element and it gets pulled toward the cursor with spring physics. |
-| [Red Thread](https://furin.dev/components/hilo-rojo/?utm_source=github) | The red thread of fate: a thread with Verlet physics that follows the cursor, pulls taut against its anchor and swings. |
-| [Spotlight Cards](https://furin.dev/components/reflector/?utm_source=github) | A grid of cards whose borders light up wherever the cursor passes, driven by a single shared light. |
-| [Wind Chime](https://furin.dev/components/campana/?utm_source=github) | A glass furin wind chime that sways with the cursor's breeze and rings when touched. It doubles as a notification bell with a counter. |
+| [Holo Card](https://furin.dev/components/hologram/?utm_source=github) | A card with 3D tilt and an iridescent holographic foil that follows the cursor. |
+| [Magnet](https://furin.dev/components/magnet/?utm_source=github) | Wrap any element and it gets pulled toward the cursor with spring physics. |
+| [Red Thread](https://furin.dev/components/red-thread/?utm_source=github) | The red thread of fate: a thread with Verlet physics that follows the cursor, pulls taut against its anchor and swings. |
+| [Spotlight Cards](https://furin.dev/components/spotlight-cards/?utm_source=github) | A grid of cards whose borders light up wherever the cursor passes, driven by a single shared light. |
+| [Wind Chime](https://furin.dev/components/chime-bell/?utm_source=github) | A glass furin wind chime that sways with the cursor's breeze and rings when touched. It doubles as a notification bell with a counter. |
 
 ### Loaders
 
@@ -156,19 +156,19 @@ import { Aurora } from "furin-ui";
 | [ASCII Text](https://furin.dev/components/ascii-text/?utm_source=github) | Text drawn with ASCII characters. A lens around the cursor magnifies, rotates and scrambles them. |
 | [Blur Number](https://furin.dev/components/blur-number/?utm_source=github) | A number whose digits roll to the new value with vertical motion blur, one after another. |
 | [Chrome Text](https://furin.dev/components/chrome-text/?utm_source=github) | Liquid chrome letters whose reflection follows the cursor. |
-| [Decipher Text](https://furin.dev/components/descifrar/?utm_source=github) | Text that appears by deciphering itself: random characters settle into place letter by letter. |
+| [Decipher Text](https://furin.dev/components/decipher-text/?utm_source=github) | Text that appears by deciphering itself: random characters settle into place letter by letter. |
 | [Gold Foil Text](https://furin.dev/components/gold-foil-text/?utm_source=github) | Gold foil text with relief and a specular glint as you move the cursor. |
-| [Gust](https://furin.dev/components/rafaga/?utm_source=github) | A headline whose letters get swept away by the cursor's wind like leaves, then spring back into place. |
+| [Gust](https://furin.dev/components/gust/?utm_source=github) | A headline whose letters get swept away by the cursor's wind like leaves, then spring back into place. |
 | [Magnetic Letters](https://furin.dev/components/magnetic-letters/?utm_source=github) | Every letter is pulled toward the cursor by a bouncy spring, tinting and growing as it gets close. |
 | [Mask Reveal](https://furin.dev/components/mask-reveal/?utm_source=github) | Staggered lines that slide up from behind a mask, like a product launch intro. |
 | [Morph Text](https://furin.dev/components/morph-text/?utm_source=github) | Words melt into one another with a viscous blur-and-threshold transition and a liquid sheen. |
-| [Odometer](https://furin.dev/components/odometro/?utm_source=github) | Numbers that roll digit by digit up to their value, like a mechanical odometer. |
+| [Odometer](https://furin.dev/components/odometer/?utm_source=github) | Numbers that roll digit by digit up to their value, like a mechanical odometer. |
 | [Orbit Text](https://furin.dev/components/orbit-text/?utm_source=github) | Text on a circle that turns slowly and speeds up, with inertia, when the cursor gets close. |
 | [Outline Fill](https://furin.dev/components/outline-fill/?utm_source=github) | Outlined text that fills with liquid through a wave that starts where the cursor enters, and drains when it leaves. |
 | [Pixel Assemble](https://furin.dev/components/pixel-assemble/?utm_source=github) | Text assembles itself from a cloud of spring-driven particles; the cursor scatters them and they snap back on their own. |
 | [RGB Glitch Text](https://furin.dev/components/rgb-glitch-text/?utm_source=github) | Clean text that occasionally breaks into short bursts: split RGB channels and shifted slices. |
 | [Shimmer Sweep](https://furin.dev/components/shimmer-sweep/?utm_source=github) | A satin sheen sweeps across the text like light over aluminum. |
-| [Split-Flap Board](https://furin.dev/components/tablero/?utm_source=github) | A board of flaps that flip in 3D, character by character, until the phrase forms, like at a train station. |
+| [Split-Flap Board](https://furin.dev/components/split-flap/?utm_source=github) | A board of flaps that flip in 3D, character by character, until the phrase forms, like at a train station. |
 | [Typewriter](https://furin.dev/components/typewriter/?utm_source=github) | Types, deletes and retypes phrases with a human rhythm, pauses on punctuation and a blinking cursor. |
 | [Weight Wave](https://furin.dev/components/weight-wave/?utm_source=github) | The weight of a variable font ripples with the cursor's proximity, letter by letter. |
 | [Word Roller](https://furin.dev/components/word-roller/?utm_source=github) | A word rolls vertically between options on a spring-loaded drum, and its pill changes width along with it. |

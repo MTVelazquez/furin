@@ -1,0 +1,135 @@
+.furin-split-flap {
+  --furin-split-flap-columnas: 12;
+  --furin-split-flap-tamano: 64px;
+  --furin-split-flap-hueco: 5px;
+  --furin-split-flap-ficha: #111111;
+  --furin-split-flap-letra: #ffffff;
+  /* Cada celda es 1 de ancho por 1.4 de alto. */
+  --furin-split-flap-ancho: calc(var(--furin-split-flap-tamano) / 1.4);
+
+  position: relative;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(var(--furin-split-flap-columnas), minmax(0, 1fr));
+  gap: var(--furin-split-flap-hueco);
+  /* A tamaño completo mide lo que suman sus celdas; si no cabe en su contenedor, se encoge entero. */
+  width: min(
+    100%,
+    calc(
+      var(--furin-split-flap-columnas) * var(--furin-split-flap-ancho) + (var(--furin-split-flap-columnas) - 1) * var(--furin-split-flap-hueco)
+    )
+  );
+  /* Contenedor de consultas: la letra de cada celda se mide contra el ancho del tablero. */
+  container-type: inline-size;
+  user-select: none;
+}
+
+/* Copia invisible para lectores de pantalla: siempre dice la frase completa. */
+.furin-split-flap__lectura {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.furin-split-flap__celda {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1.4;
+  /* Ancho de la celda × 1.26: la letra ocupa cerca de dos tercios de la altura. */
+  font-size: calc((100cqw - (var(--furin-split-flap-columnas) - 1) * var(--furin-split-flap-hueco)) / var(--furin-split-flap-columnas) * 1.26);
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--furin-split-flap-letra);
+  border-radius: 0.14em;
+  box-shadow:
+    0 0.06em 0.14em rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.07);
+  perspective: 4.5em;
+}
+
+/* La bisagra: una línea oscura en el centro, con un hilo de luz debajo. */
+.furin-split-flap__celda::after {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: max(1px, 0.035em);
+  margin-top: calc(max(1px, 0.035em) / -2);
+  background: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 max(1px, 0.02em) 0 rgba(255, 255, 255, 0.07);
+}
+
+.furin-split-flap__mitad {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  overflow: hidden;
+  background: var(--furin-split-flap-ficha);
+}
+
+/* La mitad de arriba recibe más luz. */
+.furin-split-flap__mitad--arriba {
+  top: 0;
+  border-radius: 0.14em 0.14em 0 0;
+  background: color-mix(in srgb, var(--furin-split-flap-ficha), #ffffff 7%);
+  transform-origin: 50% 100%;
+}
+
+.furin-split-flap__mitad--abajo {
+  bottom: 0;
+  border-radius: 0 0 0.14em 0.14em;
+  transform-origin: 50% 0;
+}
+
+/* Sombra que sube mientras la hoja cae (la controla el motor con --furin-split-flap-sombra). */
+.furin-split-flap__mitad::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #000000;
+  opacity: var(--furin-split-flap-sombra, 0);
+  pointer-events: none;
+}
+
+/* La letra mide la celda entera; cada mitad enseña la suya. */
+.furin-split-flap__letra {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 200%;
+  display: grid;
+  place-items: center;
+  padding-bottom: 0.03em;
+}
+
+.furin-split-flap__mitad--arriba > .furin-split-flap__letra {
+  top: 0;
+}
+
+.furin-split-flap__mitad--abajo > .furin-split-flap__letra {
+  bottom: 0;
+}
+
+/* Las hojas voltean encima de las mitades fijas; el motor las muestra solo mientras giran. */
+.furin-split-flap__hoja-cae,
+.furin-split-flap__hoja-sube {
+  visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.furin-split-flap__hoja-cae {
+  z-index: 3;
+}
+
+.furin-split-flap__hoja-sube {
+  z-index: 4;
+  transform: rotateX(90deg);
+}

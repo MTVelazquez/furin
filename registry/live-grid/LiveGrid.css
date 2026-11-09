@@ -1,0 +1,34 @@
+.furin-live-grid {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  color: #fff;
+  /* Es un fondo: no estorba al resto de la página. Los eventos se escuchan en el padre. */
+  pointer-events: none;
+}
+
+.furin-live-grid__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* El contenido va encima, centrado. */
+.furin-live-grid__content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Lo que pongas encima sí recibe clics y toques. */
+.furin-live-grid__content > * {
+  pointer-events: auto;
+}

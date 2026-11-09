@@ -142,29 +142,6 @@
       ]
     },
     {
-      "name": "campana",
-      "type": "registry:component",
-      "title": "Wind Chime",
-      "description": "A glass furin wind chime that sways with the cursor's breeze and rings when touched. It doubles as a notification bell with a counter.",
-      "author": "Marcelo Treviño Velázquez <https://furin.dev>",
-      "dependencies": [],
-      "categories": [
-        "Interaction"
-      ],
-      "files": [
-        {
-          "path": "registry/campana/Campana.tsx",
-          "type": "registry:component",
-          "target": "components/furin/campana/Campana.tsx"
-        },
-        {
-          "path": "registry/campana/Campana.css",
-          "type": "registry:file",
-          "target": "components/furin/campana/Campana.css"
-        }
-      ]
-    },
-    {
       "name": "card-stack",
       "type": "registry:component",
       "title": "Card Stack",
@@ -184,6 +161,29 @@
           "path": "registry/card-stack/CardStack.css",
           "type": "registry:file",
           "target": "components/furin/card-stack/CardStack.css"
+        }
+      ]
+    },
+    {
+      "name": "chime-bell",
+      "type": "registry:component",
+      "title": "Wind Chime",
+      "description": "A glass furin wind chime that sways with the cursor's breeze and rings when touched. It doubles as a notification bell with a counter.",
+      "author": "Marcelo Treviño Velázquez <https://furin.dev>",
+      "dependencies": [],
+      "categories": [
+        "Interaction"
+      ],
+      "files": [
+        {
+          "path": "registry/chime-bell/ChimeBell.tsx",
+          "type": "registry:component",
+          "target": "components/furin/chime-bell/ChimeBell.tsx"
+        },
+        {
+          "path": "registry/chime-bell/ChimeBell.css",
+          "type": "registry:file",
+          "target": "components/furin/chime-bell/ChimeBell.css"
         }
       ]
     },
@@ -349,7 +349,7 @@
       ]
     },
     {
-      "name": "descifrar",
+      "name": "decipher-text",
       "type": "registry:component",
       "title": "Decipher Text",
       "description": "Text that appears by deciphering itself: random characters settle into place letter by letter.",
@@ -360,14 +360,14 @@
       ],
       "files": [
         {
-          "path": "registry/descifrar/Descifrar.tsx",
+          "path": "registry/decipher-text/DecipherText.tsx",
           "type": "registry:component",
-          "target": "components/furin/descifrar/Descifrar.tsx"
+          "target": "components/furin/decipher-text/DecipherText.tsx"
         },
         {
-          "path": "registry/descifrar/Descifrar.css",
+          "path": "registry/decipher-text/DecipherText.css",
           "type": "registry:file",
-          "target": "components/furin/descifrar/Descifrar.css"
+          "target": "components/furin/decipher-text/DecipherText.css"
         }
       ]
     },
@@ -483,29 +483,6 @@
           "path": "registry/electric-border/ElectricBorder.css",
           "type": "registry:file",
           "target": "components/furin/electric-border/ElectricBorder.css"
-        }
-      ]
-    },
-    {
-      "name": "estanque",
-      "type": "registry:component",
-      "title": "Ripple Pond",
-      "description": "A WebGL water surface: the cursor and raindrops leave ripples that cross, catch the light and warp a grid beneath.",
-      "author": "Marcelo Treviño Velázquez <https://furin.dev>",
-      "dependencies": [],
-      "categories": [
-        "Backgrounds"
-      ],
-      "files": [
-        {
-          "path": "registry/estanque/Estanque.tsx",
-          "type": "registry:component",
-          "target": "components/furin/estanque/Estanque.tsx"
-        },
-        {
-          "path": "registry/estanque/Estanque.css",
-          "type": "registry:file",
-          "target": "components/furin/estanque/Estanque.css"
         }
       ]
     },
@@ -786,6 +763,29 @@
       ]
     },
     {
+      "name": "gust",
+      "type": "registry:component",
+      "title": "Gust",
+      "description": "A headline whose letters get swept away by the cursor's wind like leaves, then spring back into place.",
+      "author": "Marcelo Treviño Velázquez <https://furin.dev>",
+      "dependencies": [],
+      "categories": [
+        "Text"
+      ],
+      "files": [
+        {
+          "path": "registry/gust/Gust.tsx",
+          "type": "registry:component",
+          "target": "components/furin/gust/Gust.tsx"
+        },
+        {
+          "path": "registry/gust/Gust.css",
+          "type": "registry:file",
+          "target": "components/furin/gust/Gust.css"
+        }
+      ]
+    },
+    {
       "name": "halftone-field",
       "type": "registry:component",
       "title": "Halftone Field",
@@ -805,29 +805,6 @@
           "path": "registry/halftone-field/HalftoneField.css",
           "type": "registry:file",
           "target": "components/furin/halftone-field/HalftoneField.css"
-        }
-      ]
-    },
-    {
-      "name": "hilo-rojo",
-      "type": "registry:component",
-      "title": "Red Thread",
-      "description": "The red thread of fate: a thread with Verlet physics that follows the cursor, pulls taut against its anchor and swings.",
-      "author": "Marcelo Treviño Velázquez <https://furin.dev>",
-      "dependencies": [],
-      "categories": [
-        "Interaction"
-      ],
-      "files": [
-        {
-          "path": "registry/hilo-rojo/HiloRojo.tsx",
-          "type": "registry:component",
-          "target": "components/furin/hilo-rojo/HiloRojo.tsx"
-        },
-        {
-          "path": "registry/hilo-rojo/HiloRojo.css",
-          "type": "registry:file",
-          "target": "components/furin/hilo-rojo/HiloRojo.css"
         }
       ]
     },
@@ -878,7 +855,7 @@
       ]
     },
     {
-      "name": "holograma",
+      "name": "hologram",
       "type": "registry:component",
       "title": "Holo Card",
       "description": "A card with 3D tilt and an iridescent holographic foil that follows the cursor.",
@@ -889,37 +866,14 @@
       ],
       "files": [
         {
-          "path": "registry/holograma/Holograma.tsx",
+          "path": "registry/hologram/Hologram.tsx",
           "type": "registry:component",
-          "target": "components/furin/holograma/Holograma.tsx"
+          "target": "components/furin/hologram/Hologram.tsx"
         },
         {
-          "path": "registry/holograma/Holograma.css",
+          "path": "registry/hologram/Hologram.css",
           "type": "registry:file",
-          "target": "components/furin/holograma/Holograma.css"
-        }
-      ]
-    },
-    {
-      "name": "iman",
-      "type": "registry:component",
-      "title": "Magnet",
-      "description": "Wrap any element and it gets pulled toward the cursor with spring physics.",
-      "author": "Marcelo Treviño Velázquez <https://furin.dev>",
-      "dependencies": [],
-      "categories": [
-        "Interaction"
-      ],
-      "files": [
-        {
-          "path": "registry/iman/Iman.tsx",
-          "type": "registry:component",
-          "target": "components/furin/iman/Iman.tsx"
-        },
-        {
-          "path": "registry/iman/Iman.css",
-          "type": "registry:file",
-          "target": "components/furin/iman/Iman.css"
+          "target": "components/furin/hologram/Hologram.css"
         }
       ]
     },
@@ -1058,6 +1012,52 @@
           "path": "registry/liquid-fill/LiquidFill.css",
           "type": "registry:file",
           "target": "components/furin/liquid-fill/LiquidFill.css"
+        }
+      ]
+    },
+    {
+      "name": "live-grid",
+      "type": "registry:component",
+      "title": "Live Grid",
+      "description": "A grid of dots that part and light up around the cursor, on a spring.",
+      "author": "Marcelo Treviño Velázquez <https://furin.dev>",
+      "dependencies": [],
+      "categories": [
+        "Backgrounds"
+      ],
+      "files": [
+        {
+          "path": "registry/live-grid/LiveGrid.tsx",
+          "type": "registry:component",
+          "target": "components/furin/live-grid/LiveGrid.tsx"
+        },
+        {
+          "path": "registry/live-grid/LiveGrid.css",
+          "type": "registry:file",
+          "target": "components/furin/live-grid/LiveGrid.css"
+        }
+      ]
+    },
+    {
+      "name": "magnet",
+      "type": "registry:component",
+      "title": "Magnet",
+      "description": "Wrap any element and it gets pulled toward the cursor with spring physics.",
+      "author": "Marcelo Treviño Velázquez <https://furin.dev>",
+      "dependencies": [],
+      "categories": [
+        "Interaction"
+      ],
+      "files": [
+        {
+          "path": "registry/magnet/Magnet.tsx",
+          "type": "registry:component",
+          "target": "components/furin/magnet/Magnet.tsx"
+        },
+        {
+          "path": "registry/magnet/Magnet.css",
+          "type": "registry:file",
+          "target": "components/furin/magnet/Magnet.css"
         }
       ]
     },
@@ -1269,7 +1269,7 @@
       ]
     },
     {
-      "name": "odometro",
+      "name": "odometer",
       "type": "registry:component",
       "title": "Odometer",
       "description": "Numbers that roll digit by digit up to their value, like a mechanical odometer.",
@@ -1280,14 +1280,14 @@
       ],
       "files": [
         {
-          "path": "registry/odometro/Odometro.tsx",
+          "path": "registry/odometer/Odometer.tsx",
           "type": "registry:component",
-          "target": "components/furin/odometro/Odometro.tsx"
+          "target": "components/furin/odometer/Odometer.tsx"
         },
         {
-          "path": "registry/odometro/Odometro.css",
+          "path": "registry/odometer/Odometer.css",
           "type": "registry:file",
-          "target": "components/furin/odometro/Odometro.css"
+          "target": "components/furin/odometer/Odometer.css"
         }
       ]
     },
@@ -1499,33 +1499,10 @@
       ]
     },
     {
-      "name": "rafaga",
+      "name": "red-thread",
       "type": "registry:component",
-      "title": "Gust",
-      "description": "A headline whose letters get swept away by the cursor's wind like leaves, then spring back into place.",
-      "author": "Marcelo Treviño Velázquez <https://furin.dev>",
-      "dependencies": [],
-      "categories": [
-        "Text"
-      ],
-      "files": [
-        {
-          "path": "registry/rafaga/Rafaga.tsx",
-          "type": "registry:component",
-          "target": "components/furin/rafaga/Rafaga.tsx"
-        },
-        {
-          "path": "registry/rafaga/Rafaga.css",
-          "type": "registry:file",
-          "target": "components/furin/rafaga/Rafaga.css"
-        }
-      ]
-    },
-    {
-      "name": "reflector",
-      "type": "registry:component",
-      "title": "Spotlight Cards",
-      "description": "A grid of cards whose borders light up wherever the cursor passes, driven by a single shared light.",
+      "title": "Red Thread",
+      "description": "The red thread of fate: a thread with Verlet physics that follows the cursor, pulls taut against its anchor and swings.",
       "author": "Marcelo Treviño Velázquez <https://furin.dev>",
       "dependencies": [],
       "categories": [
@@ -1533,37 +1510,14 @@
       ],
       "files": [
         {
-          "path": "registry/reflector/Reflector.tsx",
+          "path": "registry/red-thread/RedThread.tsx",
           "type": "registry:component",
-          "target": "components/furin/reflector/Reflector.tsx"
+          "target": "components/furin/red-thread/RedThread.tsx"
         },
         {
-          "path": "registry/reflector/Reflector.css",
+          "path": "registry/red-thread/RedThread.css",
           "type": "registry:file",
-          "target": "components/furin/reflector/Reflector.css"
-        }
-      ]
-    },
-    {
-      "name": "rejilla-viva",
-      "type": "registry:component",
-      "title": "Live Grid",
-      "description": "A grid of dots that part and light up around the cursor, on a spring.",
-      "author": "Marcelo Treviño Velázquez <https://furin.dev>",
-      "dependencies": [],
-      "categories": [
-        "Backgrounds"
-      ],
-      "files": [
-        {
-          "path": "registry/rejilla-viva/RejillaViva.tsx",
-          "type": "registry:component",
-          "target": "components/furin/rejilla-viva/RejillaViva.tsx"
-        },
-        {
-          "path": "registry/rejilla-viva/RejillaViva.css",
-          "type": "registry:file",
-          "target": "components/furin/rejilla-viva/RejillaViva.css"
+          "target": "components/furin/red-thread/RedThread.css"
         }
       ]
     },
@@ -1656,6 +1610,29 @@
           "path": "registry/ripple-button/RippleButton.css",
           "type": "registry:file",
           "target": "components/furin/ripple-button/RippleButton.css"
+        }
+      ]
+    },
+    {
+      "name": "ripple-pond",
+      "type": "registry:component",
+      "title": "Ripple Pond",
+      "description": "A WebGL water surface: the cursor and raindrops leave ripples that cross, catch the light and warp a grid beneath.",
+      "author": "Marcelo Treviño Velázquez <https://furin.dev>",
+      "dependencies": [],
+      "categories": [
+        "Backgrounds"
+      ],
+      "files": [
+        {
+          "path": "registry/ripple-pond/RipplePond.tsx",
+          "type": "registry:component",
+          "target": "components/furin/ripple-pond/RipplePond.tsx"
+        },
+        {
+          "path": "registry/ripple-pond/RipplePond.css",
+          "type": "registry:file",
+          "target": "components/furin/ripple-pond/RipplePond.css"
         }
       ]
     },
@@ -1821,6 +1798,52 @@
       ]
     },
     {
+      "name": "split-flap",
+      "type": "registry:component",
+      "title": "Split-Flap Board",
+      "description": "A board of flaps that flip in 3D, character by character, until the phrase forms, like at a train station.",
+      "author": "Marcelo Treviño Velázquez <https://furin.dev>",
+      "dependencies": [],
+      "categories": [
+        "Text"
+      ],
+      "files": [
+        {
+          "path": "registry/split-flap/SplitFlap.tsx",
+          "type": "registry:component",
+          "target": "components/furin/split-flap/SplitFlap.tsx"
+        },
+        {
+          "path": "registry/split-flap/SplitFlap.css",
+          "type": "registry:file",
+          "target": "components/furin/split-flap/SplitFlap.css"
+        }
+      ]
+    },
+    {
+      "name": "spotlight-cards",
+      "type": "registry:component",
+      "title": "Spotlight Cards",
+      "description": "A grid of cards whose borders light up wherever the cursor passes, driven by a single shared light.",
+      "author": "Marcelo Treviño Velázquez <https://furin.dev>",
+      "dependencies": [],
+      "categories": [
+        "Interaction"
+      ],
+      "files": [
+        {
+          "path": "registry/spotlight-cards/SpotlightCards.tsx",
+          "type": "registry:component",
+          "target": "components/furin/spotlight-cards/SpotlightCards.tsx"
+        },
+        {
+          "path": "registry/spotlight-cards/SpotlightCards.css",
+          "type": "registry:file",
+          "target": "components/furin/spotlight-cards/SpotlightCards.css"
+        }
+      ]
+    },
+    {
       "name": "spring-accordion",
       "type": "registry:component",
       "title": "Spring Accordion",
@@ -1909,29 +1932,6 @@
           "path": "registry/sticker-peel/StickerPeel.css",
           "type": "registry:file",
           "target": "components/furin/sticker-peel/StickerPeel.css"
-        }
-      ]
-    },
-    {
-      "name": "tablero",
-      "type": "registry:component",
-      "title": "Split-Flap Board",
-      "description": "A board of flaps that flip in 3D, character by character, until the phrase forms, like at a train station.",
-      "author": "Marcelo Treviño Velázquez <https://furin.dev>",
-      "dependencies": [],
-      "categories": [
-        "Text"
-      ],
-      "files": [
-        {
-          "path": "registry/tablero/Tablero.tsx",
-          "type": "registry:component",
-          "target": "components/furin/tablero/Tablero.tsx"
-        },
-        {
-          "path": "registry/tablero/Tablero.css",
-          "type": "registry:file",
-          "target": "components/furin/tablero/Tablero.css"
         }
       ]
     },

@@ -1,0 +1,46 @@
+.furin-gust {
+  position: relative;
+  display: block;
+  font-size: clamp(2.25rem, 7vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  /* Las ligaduras (fi, ff...) se rompen al separar las letras. */
+  font-variant-ligatures: none;
+  /* Un gesto horizontal con el dedo sopla las letras; el vertical sigue desplazando la página. */
+  touch-action: pan-y;
+}
+
+/* Copia invisible para lectores de pantalla: siempre dice el texto completo. */
+.furin-gust__lectura {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Una palabra nunca se parte a la mitad, aunque cada letra sea su propio elemento. */
+.furin-gust__palabra {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* La letra se mueve solo con transform: el flujo del texto no cambia nunca. */
+.furin-gust__letra {
+  position: relative;
+  display: inline-block;
+  transform-origin: 50% 58%;
+}
+
+/* La misma letra en el color de acento, encima: aparece a medida que la hoja se aleja de su sitio. */
+.furin-gust__letra::after {
+  content: attr(data-letra);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--furin-gust-acento, #e8452c);
+  opacity: var(--furin-gust-tinte, 0);
+  pointer-events: none;
+}

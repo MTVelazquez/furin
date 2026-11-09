@@ -1,0 +1,45 @@
+.furin-decipher-text {
+  position: relative;
+  display: inline-block;
+  color: var(--furin-decipher-text-color, inherit);
+  /* Las ligaduras (fi, ff...) se rompen al cambiar letra por letra. */
+  font-variant-ligatures: none;
+}
+
+/* Copia invisible para lectores de pantalla: siempre dice el texto final. */
+.furin-decipher-text__lectura {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Una palabra nunca se parte a la mitad, aunque cada letra sea su propio elemento. */
+.furin-decipher-text__palabra {
+  white-space: nowrap;
+}
+
+.furin-decipher-text__letra {
+  position: relative;
+}
+
+/* Mientras se mezcla, la letra real se queda en el flujo (así el ancho no cambia)
+   pero invisible, y el carácter aleatorio se dibuja encima, centrado en su casilla. */
+.furin-decipher-text__letra[data-mezcla] {
+  -webkit-text-fill-color: transparent;
+}
+
+.furin-decipher-text__letra[data-mezcla]::after {
+  content: attr(data-mezcla);
+  position: absolute;
+  top: 0;
+  left: -1em;
+  right: -1em;
+  line-height: normal;
+  text-align: center;
+  white-space: pre;
+  pointer-events: none;
+  -webkit-text-fill-color: var(--furin-decipher-text-mezcla, color-mix(in srgb, currentColor 45%, transparent));
+}

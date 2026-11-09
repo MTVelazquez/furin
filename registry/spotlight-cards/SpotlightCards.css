@@ -1,0 +1,136 @@
+.furin-spotlight-cards {
+  /* Valores por defecto; el componente los reemplaza con sus props. */
+  --furin-spotlight-cards-color: #7c8bff;
+  --furin-spotlight-cards-radius: 260px;
+  --furin-spotlight-cards-gap: 16px;
+  --furin-spotlight-cards-columns: 3;
+  --furin-spotlight-cards-columns-medium: 2;
+  /* Ajustables desde fuera con la prop style. */
+  --furin-spotlight-cards-card-bg: rgba(255, 255, 255, 0.035);
+  --furin-spotlight-cards-border: rgba(255, 255, 255, 0.09);
+  --furin-spotlight-cards-title: #f4f4f8;
+  --furin-spotlight-cards-text: rgba(244, 244, 248, 0.62);
+
+  width: 100%;
+  container-type: inline-size;
+}
+
+.furin-spotlight-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--furin-spotlight-cards-columns), minmax(0, 1fr));
+  gap: var(--furin-spotlight-cards-gap);
+}
+
+/* Según el ancho del propio componente (no de la ventana): menos columnas. */
+@container (max-width: 720px) {
+  .furin-spotlight-cards__grid {
+    grid-template-columns: repeat(var(--furin-spotlight-cards-columns-medium), minmax(0, 1fr));
+  }
+}
+
+@container (max-width: 440px) {
+  .furin-spotlight-cards__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.furin-spotlight-cards__card {
+  /* Dónde cae la luz dentro de esta tarjeta; el script los actualiza. Empiezan lejos. */
+  --x: -1000px;
+  --y: -1000px;
+
+  position: relative;
+  isolation: isolate;
+  border-radius: 16px;
+  padding: 24px;
+  background: var(--furin-spotlight-cards-card-bg);
+  box-shadow: inset 0 0 0 1px var(--furin-spotlight-cards-border);
+}
+
+/* Borde luminoso: un degradado radial recortado para que solo se vea el anillo de 1.5 px. */
+.furin-spotlight-cards__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background:
+    radial-gradient(
+      calc(var(--furin-spotlight-cards-radius) * 0.55) circle at var(--x) var(--y),
+      color-mix(in srgb, var(--furin-spotlight-cards-color) 35%, white),
+      transparent
+    ),
+    radial-gradient(var(--furin-spotlight-cards-radius) circle at var(--x) var(--y), var(--furin-spotlight-cards-color), transparent 80%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+/* Halo tenue dentro de la tarjeta, de la misma luz. */
+.furin-spotlight-cards__card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    var(--furin-spotlight-cards-radius) circle at var(--x) var(--y),
+    color-mix(in srgb, var(--furin-spotlight-cards-color) 26%, transparent),
+    transparent 68%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.furin-spotlight-cards[data-lit="true"] .furin-spotlight-cards__card::before,
+.furin-spotlight-cards[data-lit="true"] .furin-spotlight-cards__card::after {
+  opacity: 1;
+}
+
+.furin-spotlight-cards__content {
+  position: relative;
+  z-index: 1;
+}
+
+.furin-spotlight-cards__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  color: color-mix(in srgb, var(--furin-spotlight-cards-color) 55%, white);
+  background: color-mix(in srgb, var(--furin-spotlight-cards-color) 14%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--furin-spotlight-cards-color) 28%, transparent);
+}
+
+.furin-spotlight-cards__title {
+  margin: 0 0 8px;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--furin-spotlight-cards-title);
+}
+
+.furin-spotlight-cards__text {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--furin-spotlight-cards-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .furin-spotlight-cards__card::before,
+  .furin-spotlight-cards__card::after {
+    transition: none;
+  }
+}
